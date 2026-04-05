@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import Background        from './components/Background';
-import Navbar            from './components/Navbar';
-import Hero              from './components/Hero';
-import UploadSection     from './components/UploadSection';
-import OptionsSection    from './components/OptionsSection';
+import Background from './components/Background';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import UploadSection from './components/UploadSection';
+import OptionsSection from './components/OptionsSection';
 import ProcessingSection from './components/ProcessingSection';
-import ResultSection     from './components/ResultSection';
-import ErrorBanner       from './components/ErrorBanner';
+import ResultSection from './components/ResultSection';
+import ErrorBanner from './components/ErrorBanner';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 

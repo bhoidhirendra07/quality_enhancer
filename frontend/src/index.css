@@ -1,18 +1,13 @@
-/* ═══════════════════════════════════════════════════════════
-   QualityAI — Global CSS
-   Tailwind directives + custom utilities
-   ═══════════════════════════════════════════════════════════ */
-
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* ── Google Font ─────────────────────────────────────────── */
+/* Google Font */
 body {
   font-family: 'Inter', sans-serif;
 }
 
-/* ── CSS Variables (Glass Design Tokens) ─────────────────── */
+/* CSS Variables (Glass Design Tokens) */
 :root {
   --glass-bg: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -24,7 +19,7 @@ html.light {
   --glass-border: rgba(0, 0, 0, 0.08);
 }
 
-/* ── Glass Card Component ────────────────────────────────── */
+/* Glass Card Component */
 @layer components {
   .glass-card {
     background: var(--glass-bg);
@@ -85,7 +80,7 @@ html.light {
   }
 }
 
-/* ── Drop Zone drag-active state ─────────────────────────── */
+/* Drop Zone drag-active state */
 .drop-zone-active {
   border-color: #6366f1 !important;
   background-color: rgba(99, 102, 241, 0.08) !important;
@@ -97,7 +92,7 @@ html.light {
   box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
 }
 
-/* ── Shimmer Progress Bar ────────────────────────────────── */
+/* Shimmer Progress Bar */
 .shimmer-bar {
   position: relative;
   overflow: hidden;
@@ -119,13 +114,13 @@ html.light {
   100% { left: 200%; }
 }
 
-/* ── Float keyframe ──────────────────────────────────────── */
+/* Float keyframe */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
 }
 
-/* ── Comparison Slider ───────────────────────────────────── */
+/* Comparison Slider */
 .comparison-container {
   cursor: ew-resize;
   touch-action: none;
@@ -136,7 +131,7 @@ html.light {
   outline-offset: 2px;
 }
 
-/* ── Step Indicators ─────────────────────────────────────── */
+/* Step Indicators */
 .step-active {
   color: #818cf8 !important;
   background-color: rgba(99, 102, 241, 0.1) !important;
@@ -146,7 +141,7 @@ html.light {
   color: #34d399 !important;
 }
 
-/* ── Section Enter Animation ─────────────────────────────── */
+/* Section Enter Animation */
 .section-enter {
   animation: sectionEnter 0.4s ease forwards;
 }
@@ -156,7 +151,7 @@ html.light {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Scrollbar ───────────────────────────────────────────── */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 3px; }
