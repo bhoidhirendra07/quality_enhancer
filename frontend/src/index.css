@@ -1,0 +1,163 @@
+/* ═══════════════════════════════════════════════════════════
+   QualityAI — Global CSS
+   Tailwind directives + custom utilities
+   ═══════════════════════════════════════════════════════════ */
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* ── Google Font ─────────────────────────────────────────── */
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+/* ── CSS Variables (Glass Design Tokens) ─────────────────── */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 20px;
+}
+
+html.light {
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(0, 0, 0, 0.08);
+}
+
+/* ── Glass Card Component ────────────────────────────────── */
+@layer components {
+  .glass-card {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(var(--glass-blur));
+    -webkit-backdrop-filter: blur(var(--glass-blur));
+  }
+
+  .btn-primary {
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 0.75rem;
+    background: linear-gradient(90deg, #1d4ed8 0%, #14b8a6 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.25), 0 4px 6px -4px rgba(59, 130, 246, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4), 0 4px 6px -4px rgba(59, 130, 246, 0.4);
+    transform: scale(1.02);
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+  }
+  .btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: scale(1);
+  }
+
+  .btn-success {
+    width: 100%;
+    padding: 1rem 0;
+    border-radius: 0.75rem;
+    background: linear-gradient(90deg, #059669 0%, #0d9488 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.25), 0 4px 6px -4px rgba(34, 197, 94, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+  }
+  .btn-success:hover {
+    box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.4), 0 4px 6px -4px rgba(34, 197, 94, 0.4);
+    transform: scale(1.02);
+  }
+  .btn-success:active {
+    transform: scale(0.98);
+  }
+}
+
+/* ── Drop Zone drag-active state ─────────────────────────── */
+.drop-zone-active {
+  border-color: #6366f1 !important;
+  background-color: rgba(99, 102, 241, 0.08) !important;
+  transform: scale(1.01);
+}
+
+.drop-zone-active .drop-icon {
+  transform: scale(1.15);
+  box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
+}
+
+/* ── Shimmer Progress Bar ────────────────────────────────── */
+.shimmer-bar {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%   { left: -100%; }
+  100% { left: 200%; }
+}
+
+/* ── Float keyframe ──────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+
+/* ── Comparison Slider ───────────────────────────────────── */
+.comparison-container {
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+#slider-handle:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* ── Step Indicators ─────────────────────────────────────── */
+.step-active {
+  color: #818cf8 !important;
+  background-color: rgba(99, 102, 241, 0.1) !important;
+}
+
+.step-done {
+  color: #34d399 !important;
+}
+
+/* ── Section Enter Animation ─────────────────────────────── */
+.section-enter {
+  animation: sectionEnter 0.4s ease forwards;
+}
+
+@keyframes sectionEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Scrollbar ───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.5); }

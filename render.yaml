@@ -1,0 +1,18 @@
+# Render.com deployment configuration
+# Deploy backend as a free web service
+
+services:
+  - type: web
+    name: qualityai-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: node server.js
+    plan: free
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: FRONTEND_URL
+        sync: false   # set this manually in Render dashboard
