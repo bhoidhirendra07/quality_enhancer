@@ -90,11 +90,11 @@ export default function UploadSection({ onUploaded, onError }) {
           </svg>
         </div>
 
-        <h2 className="text-xl font-semibold text-white mb-2">
+        <h2 className="drop-zone-title text-xl font-semibold mb-2" style={{ color: 'var(--text-base)' }}>
           {uploading ? 'Uploading...' : 'Drop your file here'}
         </h2>
-        <p className="text-gray-400 text-sm mb-4">or click to browse</p>
-        <p className="text-xs text-gray-600">Supports JPG, PNG (max 50 MB) · MP4 (max 500 MB, 60s)</p>
+        <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>or click to browse</p>
+        <p className="text-xs" style={{ color: 'var(--text-muted-strong)' }}>Supports JPG, PNG (max 50 MB) · MP4 (max 500 MB, 60s)</p>
 
         <input
           ref={fileInputRef}
@@ -111,7 +111,7 @@ export default function UploadSection({ onUploaded, onError }) {
       {/* File Preview */}
       {preview && (
         <div id="file-preview" className="mt-6 section-enter">
-          <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl border border-white/10">
+          <div className="flex items-center gap-4 p-4 rounded-xl border" style={{ background: 'var(--preview-bg)', borderColor: 'var(--preview-border)' }}>
             {/* Thumbnail */}
             <div className="w-16 h-16 rounded-lg overflow-hidden bg-white/10 flex-shrink-0 flex items-center justify-center">
               {preview.type.startsWith('image/') && (
@@ -123,8 +123,8 @@ export default function UploadSection({ onUploaded, onError }) {
             </div>
             {/* Info */}
             <div className="flex-1 min-w-0">
-              <p id="preview-name" className="font-medium text-white truncate text-sm">{preview.name}</p>
-              <p id="preview-meta" className="text-xs text-gray-500 mt-0.5">{preview.meta}</p>
+              <p id="preview-name" className="font-medium truncate text-sm" style={{ color: 'var(--text-base)' }}>{preview.name}</p>
+              <p id="preview-meta" className="text-xs mt-0.5" style={{ color: 'var(--text-muted-strong)' }}>{preview.meta}</p>
               {uploading && <p className="text-xs text-brand-400 mt-1 animate-pulse">Uploading to server...</p>}
             </div>
             {/* Remove */}

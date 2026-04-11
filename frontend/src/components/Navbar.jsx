@@ -1,7 +1,12 @@
 // Navbar.jsx — sticky top nav with logo, free badge, theme toggle
 export default function Navbar({ theme, onToggleTheme }) {
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-gray-950/80 border-b border-white/5 dark:bg-gray-950/80">
+    <header className="sticky top-0 z-50 backdrop-blur-xl border-b"
+      style={{
+        background: theme === 'dark' ? 'rgba(2, 6, 23, 0.85)' : 'rgba(255, 255, 255, 0.88)',
+        borderBottomColor: theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(99,102,241,0.12)',
+      }}
+    >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group" id="nav-logo">
@@ -17,7 +22,7 @@ export default function Navbar({ theme, onToggleTheme }) {
 
         {/* Right side */}
         <div className="flex items-center gap-3">
-          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-emerald-400 bg-emerald-400/10 px-3 py-1.5 rounded-full border border-emerald-400/20">
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-medium text-emerald-500 bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-500/20">
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
             100% Free
           </span>
@@ -27,7 +32,11 @@ export default function Navbar({ theme, onToggleTheme }) {
             id="theme-toggle"
             aria-label="Toggle dark/light mode"
             onClick={onToggleTheme}
-            className="w-9 h-9 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center transition-all duration-200 hover:scale-110"
+            className="w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-200 hover:scale-110 border"
+            style={{
+              background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(99,102,241,0.07)',
+              borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(99,102,241,0.2)',
+            }}
           >
             {theme === 'dark' ? (
               /* Sun — switch to light */
@@ -36,7 +45,7 @@ export default function Navbar({ theme, onToggleTheme }) {
               </svg>
             ) : (
               /* Moon — switch to dark */
-              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-brand-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-brand-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
               </svg>
             )}

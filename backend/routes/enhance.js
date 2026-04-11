@@ -82,9 +82,11 @@ router.post('/', async (req, res, next) => {
         fs.rmSync(inputPath, { force: true });
 
         // Schedule output deletion after 10 minutes
+        const expireAt = Date.now() + 10 * 60 * 1000;
+        jobs[jobId].expiresAt = expireAt;
         setTimeout(() => {
           fs.rmSync(outputPath, { force: true });
-          delete jobs[jobId];
+          if (jobs[jobId]) jobs[jobId].expired = true;
         }, 10 * 60 * 1000);
 
       } catch (err) {
@@ -150,12 +152,20 @@ router.get('/download/:jobId', (req, res) => {
   const { jobId } = req.params;
   const job = jobs[jobId];
 
-  if (!job || job.status !== 'complete') {
-    return res.status(404).json({ error: 'Enhanced file not ready or not found.' });
+  if (!job) {
+    return res.status(404).json({ error: 'Job not found. Please re-upload and enhance your file.' });
   }
 
-  if (!fs.existsSync(job.outputPath)) {
-    return res.status(410).json({ error: 'File has been deleted. Please re-process.' });
+  if (job.expired || !fs.existsSync(job.outputPath)) {
+    return res.status(410).json({
+      error: 'Your download link has expired.',
+      expired: true,
+      message: 'Files are automatically deleted after 10 minutes to protect your privacy. Please re-upload and enhance your file again.',
+    });
+  }
+
+  if (job.status !== 'complete') {
+    return res.status(400).json({ error: 'Enhanced file not ready yet.' });
   }
 
   res.download(job.outputPath, `enhanced_${jobId}${path.extname(job.outputPath)}`);

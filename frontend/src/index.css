@@ -2,54 +2,145 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Google Font */
+/* ── Google Font ──────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 body {
   font-family: 'Inter', sans-serif;
 }
 
-/* CSS Variables (Glass Design Tokens) */
+/* ── CSS Variables ────────────────────────────────────────────── */
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-blur: 20px;
+  /* Dark mode defaults */
+  --glass-bg:          rgba(255, 255, 255, 0.03);
+  --glass-border:      rgba(255, 255, 255, 0.08);
+  --glass-blur:        20px;
+
+  /* Text tokens */
+  --text-base:         #f1f5f9;
+  --text-muted:        #94a3b8;
+  --text-muted-strong: #64748b;
+
+  /* Surface tokens */
+  --surface-1:         rgba(255, 255, 255, 0.04);
+  --surface-2:         rgba(255, 255, 255, 0.07);
+  --border-subtle:     rgba(255, 255, 255, 0.08);
+
+  /* Timer strips */
+  --timer-bg:          rgba(255, 255, 255, 0.05);
+  --timer-border:      rgba(255, 255, 255, 0.08);
+  --expired-bg:        rgba(239, 68, 68, 0.08);
+  --expired-border:    rgba(239, 68, 68, 0.25);
+
+  /* Modal tokens */
+  --modal-bg:          #1e293b;
+  --modal-title:       #f1f5f9;
+  --modal-divider:     rgba(255, 255, 255, 0.08);
+  --modal-close-bg:    rgba(255, 255, 255, 0.05);
+  --modal-close-color: #94a3b8;
+  --modal-close-hover: rgba(255, 255, 255, 0.1);
+
+  /* Preview card */
+  --preview-bg:        rgba(255, 255, 255, 0.05);
+  --preview-border:    rgba(255, 255, 255, 0.1);
+
+  /* Footer */
+  --footer-border:     rgba(255, 255, 255, 0.05);
+  --footer-text:       #64748b;
 }
 
+/* ── Light mode overrides ─────────────────────────────────────── */
 html.light {
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-bg:          rgba(255, 255, 255, 0.75);
+  --glass-border:      rgba(99, 102, 241, 0.12);
+
+  --text-base:         #0f172a;
+  --text-muted:        #475569;
+  --text-muted-strong: #64748b;
+
+  --surface-1:         rgba(99, 102, 241, 0.04);
+  --surface-2:         rgba(99, 102, 241, 0.07);
+  --border-subtle:     rgba(99, 102, 241, 0.12);
+
+  --timer-bg:          rgba(99, 102, 241, 0.06);
+  --timer-border:      rgba(99, 102, 241, 0.15);
+  --expired-bg:        rgba(239, 68, 68, 0.06);
+  --expired-border:    rgba(239, 68, 68, 0.2);
+
+  --modal-bg:          #ffffff;
+  --modal-title:       #0f172a;
+  --modal-divider:     rgba(0, 0, 0, 0.08);
+  --modal-close-bg:    rgba(0, 0, 0, 0.04);
+  --modal-close-color: #475569;
+  --modal-close-hover: rgba(0, 0, 0, 0.07);
+
+  --preview-bg:        rgba(99, 102, 241, 0.04);
+  --preview-border:    rgba(99, 102, 241, 0.15);
+
+  --footer-border:     rgba(0, 0, 0, 0.07);
+  --footer-text:       #94a3b8;
 }
 
-/* Glass Card Component */
+/* ── Semantic utility classes ─────────────────────────────────── */
+.text-muted        { color: var(--text-muted); }
+.text-muted-strong { color: var(--text-muted-strong); }
+.result-title      { color: var(--text-base); }
+.modal-title       { color: var(--modal-title); }
+.modal-divider     { background: var(--modal-divider); }
+.modal-card        { background: var(--modal-bg); border: 1px solid var(--border-subtle); }
+.modal-close-btn   {
+  background: var(--modal-close-bg);
+  color: var(--modal-close-color);
+  border: 1px solid var(--border-subtle);
+}
+.modal-close-btn:hover { background: var(--modal-close-hover); }
+
+.timer-strip {
+  background: var(--timer-bg);
+  border: 1px solid var(--timer-border);
+}
+.expired-strip {
+  background: var(--expired-bg);
+  border: 1px solid var(--expired-border);
+  border-radius: 0.75rem;
+}
+
+/* ── Glass Card Component ─────────────────────────────────────── */
 @layer components {
   .glass-card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
+    box-shadow: 0 4px 24px -4px rgba(0, 0, 0, 0.12);
+  }
+
+  html.light .glass-card {
+    box-shadow: 0 4px 24px -4px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0,0,0,0.06);
   }
 
   .btn-primary {
     width: 100%;
     padding: 1rem 0;
     border-radius: 0.75rem;
-    background: linear-gradient(90deg, #1d4ed8 0%, #14b8a6 100%);
+    background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
     color: #fff;
     font-weight: 600;
     font-size: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.25), 0 4px 6px -4px rgba(59, 130, 246, 0.25);
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.25), 0 4px 6px -4px rgba(99, 102, 241, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     transition: all 0.2s ease;
+    cursor: pointer;
+    border: none;
   }
   .btn-primary:hover {
-    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.4), 0 4px 6px -4px rgba(59, 130, 246, 0.4);
+    box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.45), 0 4px 6px -4px rgba(99, 102, 241, 0.45);
     transform: scale(1.02);
   }
-  .btn-primary:active {
-    transform: scale(0.98);
-  }
+  .btn-primary:active  { transform: scale(0.98); }
   .btn-primary:disabled {
     opacity: 0.6;
     cursor: not-allowed;
@@ -64,23 +155,22 @@ html.light {
     color: #fff;
     font-weight: 600;
     font-size: 1rem;
-    box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.25), 0 4px 6px -4px rgba(34, 197, 94, 0.25);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.25), 0 4px 6px -4px rgba(16, 185, 129, 0.25);
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
     transition: all 0.2s ease;
+    text-decoration: none;
   }
   .btn-success:hover {
-    box-shadow: 0 10px 15px -3px rgba(34, 197, 94, 0.4), 0 4px 6px -4px rgba(34, 197, 94, 0.4);
+    box-shadow: 0 10px 15px -3px rgba(16, 185, 129, 0.4), 0 4px 6px -4px rgba(16, 185, 129, 0.4);
     transform: scale(1.02);
   }
-  .btn-success:active {
-    transform: scale(0.98);
-  }
+  .btn-success:active { transform: scale(0.98); }
 }
 
-/* Drop Zone drag-active state */
+/* ── Drop Zone drag-active ────────────────────────────────────── */
 .drop-zone-active {
   border-color: #6366f1 !important;
   background-color: rgba(99, 102, 241, 0.08) !important;
@@ -92,19 +182,91 @@ html.light {
   box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
 }
 
-/* Shimmer Progress Bar */
+/* ── Light mode: drop zone, text overrides ────────────────────── */
+html.light #drop-zone {
+  border-color: rgba(99, 102, 241, 0.25);
+}
+html.light #drop-zone:hover {
+  border-color: rgba(99, 102, 241, 0.5);
+  background-color: rgba(99, 102, 241, 0.04);
+}
+html.light #drop-zone h2,
+html.light .drop-zone-title { color: #1e293b; }
+html.light #drop-zone p { color: #64748b; }
+html.light #preview-name { color: #0f172a; }
+html.light #preview-meta { color: #64748b; }
+html.light #file-preview > div { background: var(--preview-bg); border-color: var(--preview-border); }
+
+/* ── Light mode: Options section ──────────────────────────────── */
+html.light #section-options h3,
+html.light .options-heading { color: #0f172a; }
+html.light #section-options label { color: #334155; }
+html.light #section-options .level-card-idle {
+  background: rgba(99, 102, 241, 0.04);
+  border-color: rgba(99, 102, 241, 0.15);
+}
+html.light #section-options .text-gray-300 { color: #334155; }
+html.light #section-options .text-gray-600 { color: #64748b; }
+html.light #section-options .border-white\/5 { border-color: rgba(0,0,0,0.06); }
+
+/* ── Light mode: Processing section ──────────────────────────── */
+html.light #section-processing h3 { color: #0f172a; }
+html.light #section-processing .text-gray-400 { color: #64748b; }
+html.light #section-processing .text-gray-600 { color: #94a3b8; }
+html.light #progress-pct { color: #0f172a; }
+html.light .w-full.bg-white\/5 { background: rgba(99, 102, 241, 0.08); }
+html.light #steps-container > div.bg-white\/5 { background: rgba(99, 102, 241, 0.05); }
+
+/* ── Light mode: Result section ───────────────────────────────── */
+html.light #result-meta { color: #64748b; }
+
+/* ── Light mode: Error banner ─────────────────────────────────── */
+html.light #section-error { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
+html.light #error-message { color: #b91c1c; }
+
+/* ── Light mode: Hero section ─────────────────────────────────── */
+html.light #section-hero h1,
+html.light .hero-headline { color: #0f172a !important; }
+html.light .hero-subtitle { color: #475569 !important; }
+html.light .stat-value { color: #0f172a !important; }
+html.light .stat-label  { color: #64748b !important; }
+html.light .stat-divider { background: rgba(0,0,0,0.1); }
+
+/* ── Light mode: Watermark toggle border ─────────────────────── */
+html.light .border-white\/5 { border-color: rgba(0,0,0,0.06); }
+
+/* ── Light mode: Navbar ───────────────────────────────────────── */
+html.light header {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-bottom-color: rgba(99, 102, 241, 0.12) !important;
+}
+html.light #theme-toggle {
+  background: rgba(99, 102, 241, 0.07) !important;
+  border-color: rgba(99, 102, 241, 0.2) !important;
+}
+html.light #theme-toggle:hover {
+  background: rgba(99, 102, 241, 0.12) !important;
+}
+
+/* ── Light mode: Footer ───────────────────────────────────────── */
+html.light footer {
+  border-color: var(--footer-border) !important;
+}
+
+/* ── Light mode: Scrollbar ────────────────────────────────────── */
+html.light ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.25); }
+html.light ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.45); }
+
+/* ── Shimmer Progress Bar ─────────────────────────────────────── */
 .shimmer-bar {
   position: relative;
   overflow: hidden;
 }
-
 .shimmer-bar::after {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
   animation: shimmer 1.5s ease-in-out infinite;
 }
@@ -114,44 +276,41 @@ html.light {
   100% { left: 200%; }
 }
 
-/* Float keyframe */
+/* ── Float keyframe ───────────────────────────────────────────── */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
 }
 
-/* Comparison Slider */
+/* ── Comparison Slider ────────────────────────────────────────── */
 .comparison-container {
   cursor: ew-resize;
   touch-action: none;
 }
-
 #slider-handle:focus-visible {
   outline: 2px solid #6366f1;
   outline-offset: 2px;
 }
 
-/* Step Indicators */
+/* ── Step Indicators ──────────────────────────────────────────── */
 .step-active {
   color: #818cf8 !important;
-  background-color: rgba(99, 102, 241, 0.1) !important;
+  background-color: rgba(99, 102, 241, 0.12) !important;
 }
-
 .step-done {
   color: #34d399 !important;
 }
 
-/* Section Enter Animation */
+/* ── Section Enter Animation ──────────────────────────────────── */
 .section-enter {
   animation: sectionEnter 0.4s ease forwards;
 }
-
 @keyframes sectionEnter {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Scrollbar */
+/* ── Scrollbar ────────────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 3px; }

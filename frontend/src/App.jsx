@@ -97,11 +97,11 @@ export default function App() {
   // ── Light mode body bg ─────────────────────────────────────────
   const bodyBg = theme === 'dark'
     ? 'bg-gray-950 text-gray-100'
-    : 'bg-slate-100 text-gray-900';
+    : 'bg-gradient-to-br from-slate-50 via-indigo-50/40 to-purple-50/30 text-slate-900';
 
   return (
     <div className={`min-h-screen transition-colors duration-300 font-inter ${bodyBg}`}>
-      <Background />
+      <Background theme={theme} />
       <Navbar theme={theme} onToggleTheme={toggleTheme} />
 
       <Hero />
@@ -141,11 +141,17 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-8 text-center">
-        <p className="text-xs text-gray-600">
-          © 2025 QualityAI — All processing is done server-side. No data is stored.
-          Built with Node.js, Sharp &amp; FFmpeg.
-        </p>
+      <footer className="border-t py-8 px-4" style={{ borderColor: 'var(--footer-border)' }}>
+        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p className="text-xs" style={{ color: 'var(--footer-text)' }}>
+            © {new Date().getFullYear()} <span className="font-semibold text-brand-400">QualityAI</span> — All processing is server-side. No data stored.
+          </p>
+          <div className="flex items-center gap-3">
+            <span className="text-xs px-2.5 py-1 rounded-full border" style={{ color: 'var(--footer-text)', borderColor: 'var(--border-subtle)', background: 'var(--surface-1)' }}>Node.js</span>
+            <span className="text-xs px-2.5 py-1 rounded-full border" style={{ color: 'var(--footer-text)', borderColor: 'var(--border-subtle)', background: 'var(--surface-1)' }}>Sharp</span>
+            <span className="text-xs px-2.5 py-1 rounded-full border" style={{ color: 'var(--footer-text)', borderColor: 'var(--border-subtle)', background: 'var(--surface-1)' }}>FFmpeg</span>
+          </div>
+        </div>
       </footer>
     </div>
   );

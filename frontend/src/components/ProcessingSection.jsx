@@ -108,12 +108,12 @@ export default function ProcessingSection({ jobId, fileType, level, onComplete, 
             </defs>
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
-            <span id="progress-pct" className="text-sm font-bold text-white">{Math.round(pct)}%</span>
+            <span id="progress-pct" className="text-sm font-bold" style={{ color: 'var(--text-base)' }}>{Math.round(pct)}%</span>
           </div>
         </div>
 
-        <h3 className="text-xl font-semibold text-white mb-1">Enhancing your file...</h3>
-        <p id="progress-message" className="text-sm text-gray-400">{message}</p>
+        <h3 className="text-xl font-semibold mb-1" style={{ color: 'var(--text-base)' }}>Enhancing your file...</h3>
+        <p id="progress-message" className="text-sm" style={{ color: 'var(--text-muted)' }}>{message}</p>
       </div>
 
       {/* Progress bar */}
@@ -129,7 +129,7 @@ export default function ProcessingSection({ jobId, fileType, level, onComplete, 
         />
       </div>
 
-      <div className="flex justify-between text-xs text-gray-600">
+      <div className="flex justify-between text-xs" style={{ color: 'var(--text-muted-strong)' }}>
         <span id="progress-elapsed">{elapsed}s elapsed</span>
         <span id="progress-eta">{eta}</span>
       </div>
