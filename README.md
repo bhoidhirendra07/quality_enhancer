@@ -78,24 +78,24 @@ Backend runs at: http://localhost:5000
 
 ### 4. Run Frontend
 
-The frontend is pure HTML/JS — just open it in a browser or serve it:
+The frontend is pure _vite + react_ just open it in a browser or serve it:
 
-**Option A — Open directly:**
+**Option A — Development mode (recommended)**
 ```bash
-# Just double-click frontend/index.html
-# OR use VS Code Live Server extension
+cd frontend
+npm install   # run once
+npm run dev
 ```
 
-**Option B — Serve with Node:**
+
+**Option B — Production build**
 ```bash
-# Install once globally
-npm install -g serve
-
-# Serve frontend
-serve frontend -p 3000
+# cd frontend
+npm run build
+npm run preview
 ```
-
-Frontend runs at: http://localhost:3000
+build → creates optimized production files
+preview → serves them locally
 
 ---
 
