@@ -49,36 +49,43 @@ body {
   --footer-text:       #64748b;
 }
 
-/* ── Light mode overrides ─────────────────────────────────────── */
+/* ── Light mode overrides ───────────────────────────────── */
 html.light {
-  --glass-bg:          rgba(255, 255, 255, 0.75);
-  --glass-border:      rgba(99, 102, 241, 0.12);
+  /* Glass: white with strong purple tint + deeper border */
+  --glass-bg:          rgba(255, 255, 255, 0.82);
+  --glass-border:      rgba(99, 102, 241, 0.22);
 
-  --text-base:         #0f172a;
-  --text-muted:        #475569;
-  --text-muted-strong: #64748b;
+  /* Text: strong contrast on light bg */
+  --text-base:         #1e1b4b;
+  --text-muted:        #4338ca;
+  --text-muted-strong: #6366f1;
 
-  --surface-1:         rgba(99, 102, 241, 0.04);
-  --surface-2:         rgba(99, 102, 241, 0.07);
-  --border-subtle:     rgba(99, 102, 241, 0.12);
+  /* Surfaces: rich violet-tinted fills */
+  --surface-1:         rgba(99, 102, 241, 0.08);
+  --surface-2:         rgba(99, 102, 241, 0.14);
+  --border-subtle:     rgba(99, 102, 241, 0.25);
 
-  --timer-bg:          rgba(99, 102, 241, 0.06);
-  --timer-border:      rgba(99, 102, 241, 0.15);
-  --expired-bg:        rgba(239, 68, 68, 0.06);
-  --expired-border:    rgba(239, 68, 68, 0.2);
+  /* Timer strips */
+  --timer-bg:          rgba(99, 102, 241, 0.1);
+  --timer-border:      rgba(99, 102, 241, 0.28);
+  --expired-bg:        rgba(239, 68, 68, 0.08);
+  --expired-border:    rgba(239, 68, 68, 0.3);
 
-  --modal-bg:          #ffffff;
-  --modal-title:       #0f172a;
-  --modal-divider:     rgba(0, 0, 0, 0.08);
-  --modal-close-bg:    rgba(0, 0, 0, 0.04);
-  --modal-close-color: #475569;
-  --modal-close-hover: rgba(0, 0, 0, 0.07);
+  /* Modal: white card with strong shadow */
+  --modal-bg:          #f8f7ff;
+  --modal-title:       #1e1b4b;
+  --modal-divider:     rgba(99, 102, 241, 0.15);
+  --modal-close-bg:    rgba(99, 102, 241, 0.06);
+  --modal-close-color: #4f46e5;
+  --modal-close-hover: rgba(99, 102, 241, 0.12);
 
-  --preview-bg:        rgba(99, 102, 241, 0.04);
-  --preview-border:    rgba(99, 102, 241, 0.15);
+  /* Preview card */
+  --preview-bg:        rgba(99, 102, 241, 0.07);
+  --preview-border:    rgba(99, 102, 241, 0.25);
 
-  --footer-border:     rgba(0, 0, 0, 0.07);
-  --footer-text:       #94a3b8;
+  /* Footer */
+  --footer-border:     rgba(99, 102, 241, 0.12);
+  --footer-text:       #6366f1;
 }
 
 /* ── Semantic utility classes ─────────────────────────────────── */
@@ -217,35 +224,35 @@ html.light #progress-pct { color: #0f172a; }
 html.light .w-full.bg-white\/5 { background: rgba(99, 102, 241, 0.08); }
 html.light #steps-container > div.bg-white\/5 { background: rgba(99, 102, 241, 0.05); }
 
-/* ── Light mode: Result section ───────────────────────────────── */
-html.light #result-meta { color: #64748b; }
+/* ── Light mode: Result section ───────────────────────── */
+html.light #result-meta { color: #4f46e5; }
 
-/* ── Light mode: Error banner ─────────────────────────────────── */
-html.light #section-error { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
-html.light #error-message { color: #b91c1c; }
+/* ── Light mode: Error banner ────────────────────────── */
+html.light #section-error { background: rgba(239, 68, 68, 0.07); border-color: rgba(239, 68, 68, 0.3); }
+html.light #error-message { color: #991b1b; }
 
-/* ── Light mode: Hero section ─────────────────────────────────── */
+/* ── Light mode: Hero section ─────────────────────────── */
 html.light #section-hero h1,
-html.light .hero-headline { color: #0f172a !important; }
-html.light .hero-subtitle { color: #475569 !important; }
-html.light .stat-value { color: #0f172a !important; }
-html.light .stat-label  { color: #64748b !important; }
-html.light .stat-divider { background: rgba(0,0,0,0.1); }
+html.light .hero-headline { color: #1e1b4b !important; }
+html.light .hero-subtitle { color: #4338ca !important; }
+html.light .stat-value    { color: #1e1b4b !important; }
+html.light .stat-label    { color: #6366f1 !important; }
+html.light .stat-divider  { background: rgba(99, 102, 241, 0.2); }
 
 /* ── Light mode: Watermark toggle border ─────────────────────── */
 html.light .border-white\/5 { border-color: rgba(0,0,0,0.06); }
 
 /* ── Light mode: Navbar ───────────────────────────────────────── */
 html.light header {
-  background: rgba(255, 255, 255, 0.85) !important;
-  border-bottom-color: rgba(99, 102, 241, 0.12) !important;
+  background: rgba(248, 247, 255, 0.92) !important;
+  border-bottom-color: rgba(99, 102, 241, 0.22) !important;
 }
 html.light #theme-toggle {
-  background: rgba(99, 102, 241, 0.07) !important;
-  border-color: rgba(99, 102, 241, 0.2) !important;
+  background: rgba(99, 102, 241, 0.1) !important;
+  border-color: rgba(99, 102, 241, 0.3) !important;
 }
 html.light #theme-toggle:hover {
-  background: rgba(99, 102, 241, 0.12) !important;
+  background: rgba(99, 102, 241, 0.18) !important;
 }
 
 /* ── Light mode: Footer ───────────────────────────────────────── */

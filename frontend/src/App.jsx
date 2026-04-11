@@ -34,12 +34,13 @@ export default function App() {
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
 
   // ── App State ──────────────────────────────────────────────────
-  const [phase,    setPhase]    = useState('idle');    // idle | options | processing | complete
-  const [jobId,    setJobId]    = useState(null);
-  const [fileType, setFileType] = useState(null);
-  const [file,     setFile]     = useState(null);
-  const [level,    setLevel]    = useState('medium');
-  const [error,    setError]    = useState('');
+  const [phase,     setPhase]     = useState('idle');    // idle | options | processing | complete
+  const [jobId,     setJobId]     = useState(null);
+  const [fileType,  setFileType]  = useState(null);
+  const [file,      setFile]      = useState(null);
+  const [level,     setLevel]     = useState('medium');
+  const [error,     setError]     = useState('');
+  const [uploadKey, setUploadKey] = useState(0); // bump to remount UploadSection
 
   // ── Callbacks ──────────────────────────────────────────────────
   const handleUploaded = useCallback((result) => {
@@ -91,13 +92,14 @@ export default function App() {
     setFile(null);
     setLevel('medium');
     setError('');
+    setUploadKey((k) => k + 1); // remount UploadSection to clear its internal state
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   // ── Light mode body bg ─────────────────────────────────────────
   const bodyBg = theme === 'dark'
     ? 'bg-gray-950 text-gray-100'
-    : 'bg-gradient-to-br from-slate-50 via-indigo-50/40 to-purple-50/30 text-slate-900';
+    : 'bg-gradient-to-br from-indigo-50 via-violet-50 to-purple-100 text-indigo-950';
 
   return (
     <div className={`min-h-screen transition-colors duration-300 font-inter ${bodyBg}`}>
@@ -110,7 +112,7 @@ export default function App() {
         <ErrorBanner message={error} onDismiss={() => setError('')} />
 
         {/* Upload — always visible */}
-        <UploadSection onUploaded={handleUploaded} onError={setError} />
+        <UploadSection key={uploadKey} onUploaded={handleUploaded} onError={setError} />
 
         {/* Options — after file uploaded */}
         {phase === 'options' && (
