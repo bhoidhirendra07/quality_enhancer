@@ -49,43 +49,44 @@ body {
   --footer-text:       #64748b;
 }
 
-/* ── Light mode overrides ───────────────────────────────── */
+/* ── Light mode overrides (warm lavender — not too bright) ─── */
 html.light {
-  /* Glass: white with strong purple tint + deeper border */
-  --glass-bg:          rgba(255, 255, 255, 0.82);
-  --glass-border:      rgba(99, 102, 241, 0.22);
+  /* Glass: soft lavender-tinted cards */
+  --glass-bg:          rgba(238, 235, 255, 0.82);
+  --glass-border:      rgba(139, 92, 246, 0.2);
+  --glass-blur:        20px;
 
-  /* Text: strong contrast on light bg */
+  /* Text: deep slate */
   --text-base:         #1e1b4b;
-  --text-muted:        #4338ca;
-  --text-muted-strong: #6366f1;
+  --text-muted:        #4f46e5;
+  --text-muted-strong: #6d28d9;
 
-  /* Surfaces: rich violet-tinted fills */
-  --surface-1:         rgba(99, 102, 241, 0.08);
-  --surface-2:         rgba(99, 102, 241, 0.14);
-  --border-subtle:     rgba(99, 102, 241, 0.25);
+  /* Surfaces */
+  --surface-1:         rgba(139, 92, 246, 0.08);
+  --surface-2:         rgba(139, 92, 246, 0.14);
+  --border-subtle:     rgba(139, 92, 246, 0.22);
 
   /* Timer strips */
-  --timer-bg:          rgba(99, 102, 241, 0.1);
-  --timer-border:      rgba(99, 102, 241, 0.28);
-  --expired-bg:        rgba(239, 68, 68, 0.08);
-  --expired-border:    rgba(239, 68, 68, 0.3);
+  --timer-bg:          rgba(139, 92, 246, 0.09);
+  --timer-border:      rgba(139, 92, 246, 0.25);
+  --expired-bg:        rgba(239, 68, 68, 0.07);
+  --expired-border:    rgba(239, 68, 68, 0.28);
 
-  /* Modal: white card with strong shadow */
-  --modal-bg:          #f8f7ff;
+  /* Modal */
+  --modal-bg:          #f5f3ff;
   --modal-title:       #1e1b4b;
-  --modal-divider:     rgba(99, 102, 241, 0.15);
-  --modal-close-bg:    rgba(99, 102, 241, 0.06);
+  --modal-divider:     rgba(139, 92, 246, 0.15);
+  --modal-close-bg:    rgba(139, 92, 246, 0.08);
   --modal-close-color: #4f46e5;
-  --modal-close-hover: rgba(99, 102, 241, 0.12);
+  --modal-close-hover: rgba(139, 92, 246, 0.15);
 
   /* Preview card */
-  --preview-bg:        rgba(99, 102, 241, 0.07);
-  --preview-border:    rgba(99, 102, 241, 0.25);
+  --preview-bg:        rgba(139, 92, 246, 0.07);
+  --preview-border:    rgba(139, 92, 246, 0.22);
 
   /* Footer */
-  --footer-border:     rgba(99, 102, 241, 0.12);
-  --footer-text:       #6366f1;
+  --footer-border:     rgba(139, 92, 246, 0.15);
+  --footer-text:       #6d28d9;
 }
 
 /* ── Semantic utility classes ─────────────────────────────────── */
@@ -123,7 +124,12 @@ html.light {
   }
 
   html.light .glass-card {
-    box-shadow: 0 4px 24px -4px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0,0,0,0.06);
+    background: rgba(238, 235, 255, 0.82);
+    border-color: rgba(139, 92, 246, 0.2);
+    box-shadow:
+      0 4px 24px -4px rgba(109, 40, 217, 0.12),
+      0 1px 6px rgba(0,0,0,0.07),
+      inset 0 1px 0 rgba(255,255,255,0.6);
   }
 
   .btn-primary {
@@ -189,19 +195,20 @@ html.light {
   box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
 }
 
-/* ── Light mode: drop zone, text overrides ────────────────────── */
+/* ── Light mode: drop zone ──────────────────────────────────── */
 html.light #drop-zone {
-  border-color: rgba(99, 102, 241, 0.25);
+  border-color: rgba(139, 92, 246, 0.3);
+  background: rgba(139, 92, 246, 0.04);
 }
 html.light #drop-zone:hover {
-  border-color: rgba(99, 102, 241, 0.5);
-  background-color: rgba(99, 102, 241, 0.04);
+  border-color: rgba(139, 92, 246, 0.55);
+  background-color: rgba(139, 92, 246, 0.08);
 }
 html.light #drop-zone h2,
-html.light .drop-zone-title { color: #1e293b; }
-html.light #drop-zone p { color: #64748b; }
-html.light #preview-name { color: #0f172a; }
-html.light #preview-meta { color: #64748b; }
+html.light .drop-zone-title { color: #1e1b4b; }
+html.light #drop-zone p { color: #5b21b6; }
+html.light #preview-name { color: #1e1b4b; }
+html.light #preview-meta { color: #6d28d9; }
 html.light #file-preview > div { background: var(--preview-bg); border-color: var(--preview-border); }
 
 /* ── Light mode: Options section ──────────────────────────────── */
@@ -210,16 +217,27 @@ html.light .options-heading { color: #0f172a; }
 html.light #section-options label { color: #334155; }
 html.light #section-options .level-card-idle {
   background: rgba(99, 102, 241, 0.04);
-  border-color: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.18);
 }
-html.light #section-options .text-gray-300 { color: #334155; }
+html.light #section-options .text-gray-300,
+html.light #section-options .text-white { color: #334155; }
 html.light #section-options .text-gray-600 { color: #64748b; }
-html.light #section-options .border-white\/5 { border-color: rgba(0,0,0,0.06); }
+html.light #section-options .border-white\/5 { border-color: rgba(0,0,0,0.07); }
+
+/* Level cards in light mode */
+html.light #section-options .border-brand-500\/50 { border-color: rgba(99, 102, 241, 0.5) !important; }
+html.light #section-options .bg-brand-500\/10 { background: rgba(99, 102, 241, 0.08) !important; }
+html.light #section-options .border-white\/10 { border-color: rgba(0,0,0,0.08) !important; }
+html.light #section-options .bg-white\/5 { background: rgba(0,0,0,0.02) !important; }
+html.light #section-options .text-brand-400 { color: #4f46e5 !important; }
+html.light #section-options .text-white { color: #1e293b !important; }
+html.light #section-options .text-gray-400 { color: #475569 !important; }
+html.light #section-options .text-gray-500 { color: #64748b !important; }
 
 /* ── Light mode: Processing section ──────────────────────────── */
 html.light #section-processing h3 { color: #0f172a; }
-html.light #section-processing .text-gray-400 { color: #64748b; }
-html.light #section-processing .text-gray-600 { color: #94a3b8; }
+html.light #section-processing .text-gray-400 { color: #475569; }
+html.light #section-processing .text-gray-600 { color: #64748b; }
 html.light #progress-pct { color: #0f172a; }
 html.light .w-full.bg-white\/5 { background: rgba(99, 102, 241, 0.08); }
 html.light #steps-container > div.bg-white\/5 { background: rgba(99, 102, 241, 0.05); }
@@ -228,41 +246,53 @@ html.light #steps-container > div.bg-white\/5 { background: rgba(99, 102, 241, 0
 html.light #result-meta { color: #4f46e5; }
 
 /* ── Light mode: Error banner ────────────────────────── */
-html.light #section-error { background: rgba(239, 68, 68, 0.07); border-color: rgba(239, 68, 68, 0.3); }
+html.light #section-error { background: rgba(239, 68, 68, 0.06); border-color: rgba(239, 68, 68, 0.28); }
 html.light #error-message { color: #991b1b; }
 
 /* ── Light mode: Hero section ─────────────────────────── */
 html.light #section-hero h1,
 html.light .hero-headline { color: #1e1b4b !important; }
-html.light .hero-subtitle { color: #4338ca !important; }
+html.light .hero-subtitle { color: #5b21b6 !important; }
 html.light .stat-value    { color: #1e1b4b !important; }
 html.light .stat-label    { color: #6366f1 !important; }
 html.light .stat-divider  { background: rgba(99, 102, 241, 0.2); }
 
+/* Hero badge + gradient text in light mode */
+html.light #section-hero .text-brand-400 { color: #4f46e5; }
+html.light #section-hero .bg-brand-500\/10 { background: rgba(99, 102, 241, 0.08); }
+html.light #section-hero .border-brand-500\/20 { border-color: rgba(99, 102, 241, 0.2); }
+
 /* ── Light mode: Watermark toggle border ─────────────────────── */
-html.light .border-white\/5 { border-color: rgba(0,0,0,0.06); }
+html.light .border-white\/5 { border-color: rgba(0,0,0,0.07); }
+html.light .bg-white\/10 { background: rgba(0,0,0,0.05) !important; }
+
+/* Toggle switch track in light mode */
+html.light .peer:not(:checked) ~ div { background: rgba(0,0,0,0.12) !important; border-color: rgba(0,0,0,0.1) !important; }
 
 /* ── Light mode: Navbar ───────────────────────────────────────── */
 html.light header {
-  background: rgba(248, 247, 255, 0.92) !important;
-  border-bottom-color: rgba(99, 102, 241, 0.22) !important;
+  background: rgba(237, 233, 254, 0.92) !important;
+  border-bottom-color: rgba(139, 92, 246, 0.2) !important;
+  box-shadow: 0 1px 16px rgba(109, 40, 217, 0.08);
 }
+html.light #nav-logo span { color: #1e1b4b; }
 html.light #theme-toggle {
-  background: rgba(99, 102, 241, 0.1) !important;
-  border-color: rgba(99, 102, 241, 0.3) !important;
+  background: rgba(139, 92, 246, 0.1) !important;
+  border-color: rgba(139, 92, 246, 0.28) !important;
 }
 html.light #theme-toggle:hover {
-  background: rgba(99, 102, 241, 0.18) !important;
+  background: rgba(139, 92, 246, 0.2) !important;
 }
 
 /* ── Light mode: Footer ───────────────────────────────────────── */
 html.light footer {
   border-color: var(--footer-border) !important;
+  background: rgba(237, 233, 254, 0.6);
 }
 
 /* ── Light mode: Scrollbar ────────────────────────────────────── */
-html.light ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.25); }
-html.light ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.45); }
+html.light ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); }
+html.light ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }
 
 /* ── Shimmer Progress Bar ─────────────────────────────────────── */
 .shimmer-bar {
@@ -287,6 +317,40 @@ html.light ::-webkit-scrollbar-thumb:hover { background: rgba(99, 102, 241, 0.45
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
+}
+
+/* ── Light mode: Orb drift animations ────────────────────────── */
+/* Each orb drifts in a unique figure-8-like path at different speeds */
+@keyframes orb-drift-1 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  25%  { transform: translate(40px, -30px)  scale(1.04); }
+  50%  { transform: translate(20px, -60px)  scale(0.97); }
+  75%  { transform: translate(-30px,-25px)  scale(1.02); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes orb-drift-2 {
+  0%   { transform: translate(0px,   0px)   scale(1);    }
+  33%  { transform: translate(-50px, 35px)  scale(1.06); }
+  66%  { transform: translate(30px,  60px)  scale(0.95); }
+  100% { transform: translate(0px,   0px)   scale(1);    }
+}
+@keyframes orb-drift-3 {
+  0%   { transform: translate(0px,   0px)  scale(1);    }
+  40%  { transform: translate(60px, -40px) scale(1.05); }
+  80%  { transform: translate(-20px, 30px) scale(0.96); }
+  100% { transform: translate(0px,   0px)  scale(1);    }
+}
+@keyframes orb-drift-4 {
+  0%   { transform: translate(0px,  0px)   scale(1);    }
+  50%  { transform: translate(-45px,-50px) scale(1.08); }
+  100% { transform: translate(0px,  0px)   scale(1);    }
+}
+
+/* ── Light mode: Gradient mesh shift ─────────────────────────── */
+@keyframes mesh-shift {
+  0%   { opacity: 0.25; transform: scale(1)    rotate(0deg);   }
+  50%  { opacity: 0.40; transform: scale(1.08) rotate(3deg);   }
+  100% { opacity: 0.28; transform: scale(1.02) rotate(-2deg);  }
 }
 
 /* ── Comparison Slider ────────────────────────────────────────── */

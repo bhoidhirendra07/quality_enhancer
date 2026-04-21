@@ -16,7 +16,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             </svg>
           </div>
           <span className="font-bold text-lg tracking-tight bg-gradient-to-r from-brand-400 to-accent-400 bg-clip-text text-transparent">
-            QualityAI
+            QuickEnhance
           </span>
         </a>
 

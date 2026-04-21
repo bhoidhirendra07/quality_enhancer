@@ -1,8 +1,26 @@
 import { useRef, useState, useCallback } from 'react';
 
-const MAX_IMAGE_SIZE = 50 * 1024 * 1024;
-const MAX_VIDEO_SIZE = 500 * 1024 * 1024;
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'video/mp4'];
+const MAX_IMAGE_SIZE = 50 * 1024 * 1024;   // 50 MB
+const MAX_VIDEO_SIZE = 500 * 1024 * 1024;  // 500 MB
+
+// All accepted image MIME types
+const IMAGE_TYPES = new Set([
+  'image/jpeg', 'image/jpg', 'image/png', 'image/webp',
+  'image/gif', 'image/bmp', 'image/tiff', 'image/avif',
+  'image/heic', 'image/heif', 'image/svg+xml',
+]);
+
+// All accepted video MIME types
+const VIDEO_TYPES = new Set([
+  'video/mp4', 'video/quicktime', 'video/x-msvideo',
+  'video/x-matroska', 'video/webm', 'video/x-flv',
+  'video/x-ms-wmv', 'video/3gpp', 'video/3gpp2', 'video/ogg',
+]);
+
+const IMAGE_ACCEPT = '.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.tif,.avif,.heic,.heif,.svg';
+const VIDEO_ACCEPT = '.mp4,.mov,.avi,.mkv,.webm,.flv,.wmv,.3gp,.3g2,.ogv';
+const ALL_ACCEPT = `${IMAGE_ACCEPT},${VIDEO_ACCEPT}`;
+
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 
 function formatSize(bytes) {
@@ -12,11 +30,14 @@ function formatSize(bytes) {
 }
 
 function validateFile(file) {
-  if (!ALLOWED_TYPES.includes(file.type))
-    return `Unsupported type: ${file.type}. Please upload JPG, PNG, or MP4.`;
-  if (file.type === 'video/mp4' && file.size > MAX_VIDEO_SIZE)
+  const isImage = IMAGE_TYPES.has(file.type);
+  const isVideo = VIDEO_TYPES.has(file.type);
+
+  if (!isImage && !isVideo)
+    return `Unsupported type: ${file.type || 'unknown'}. Please upload a supported image or video file.`;
+  if (isVideo && file.size > MAX_VIDEO_SIZE)
     return `Video too large (${formatSize(file.size)}). Max is 500 MB.`;
-  if (file.type !== 'video/mp4' && file.size > MAX_IMAGE_SIZE)
+  if (isImage && file.size > MAX_IMAGE_SIZE)
     return `Image too large (${formatSize(file.size)}). Max is 50 MB.`;
   return null;
 }
@@ -94,13 +115,17 @@ export default function UploadSection({ onUploaded, onError }) {
           {uploading ? 'Uploading...' : 'Drop your file here'}
         </h2>
         <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>or click to browse</p>
-        <p className="text-xs" style={{ color: 'var(--text-muted-strong)' }}>Supports JPG, PNG (max 50 MB) · MP4 (max 500 MB, 60s)</p>
+        <p className="text-xs" style={{ color: 'var(--text-muted-strong)' }}>
+          Images: JPG, PNG, WebP, GIF, BMP, TIFF, AVIF, HEIC (max 50 MB)
+          <span className="mx-1 opacity-40">·</span>
+          Videos: MP4, MOV, AVI, MKV, WebM, FLV, WMV, 3GP (max 500 MB, 60s)
+        </p>
 
         <input
           ref={fileInputRef}
           type="file"
           id="file-input"
-          accept=".jpg,.jpeg,.png,.mp4"
+          accept={ALL_ACCEPT}
           className="absolute inset-0 opacity-0 w-full h-full cursor-pointer"
           aria-label="File input"
           onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }}
@@ -117,7 +142,7 @@ export default function UploadSection({ onUploaded, onError }) {
               {preview.type.startsWith('image/') && (
                 <img src={preview.objectUrl} alt="Preview" className="w-full h-full object-cover" />
               )}
-              {preview.type === 'video/mp4' && (
+              {VIDEO_TYPES.has(preview.type) && (
                 <video src={preview.objectUrl} className="w-full h-full object-cover" muted />
               )}
             </div>

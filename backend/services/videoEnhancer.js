@@ -4,42 +4,66 @@
  *
  * Enhancement pipeline:
  * 1. Scale up (1.5x / 2x / 2x) with Lanczos
- * 2. Denoise with hqdn3d filter
- * 3. Sharpen with unsharp mask
- * 4. Improve brightness/contrast with eq filter
- * 5. Optional watermark (drawtext filter)
+ * 2. Denoise with hqdn3d (light, preserve natural grain)
+ * 3. Hair-safe sharpen: gentle luma unsharp + smartblur to protect fine
+ *    hair strands from being treated as noise (avoids the "aged hair" effect)
+ * 4. Color grade with eq filter (natural brightness & contrast)
+ * 5. Optional minimal stylish watermark (drawtext filter)
  */
 
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('ffmpeg-static');
+const ffprobePath = require('ffprobe-static').path;
 const path = require('path');
 
-// Point fluent-ffmpeg to the static binary
+// Point fluent-ffmpeg to the static binaries
 ffmpeg.setFfmpegPath(ffmpegPath);
+ffmpeg.setFfprobePath(ffprobePath);
 
 // Enhancement presets for video
+// Philosophy: preserve the original look, only clean and sharpen.
+// Key decisions:
+//   brightness = 0.0  → NEVER boost brightness (avoids washed-out / overexposed look)
+//   gamma < 1.0       → gently opens shadows WITHOUT blowing highlights
+//   unsharp chroma    = 0.0 → luma-only sharpening (colors stay natural)
+//   hqdn3d            → gentle denoise, not aggressive
 const PRESETS = {
   low: {
     scaleMultiplier: 1.5,
-    hqdn3d: '2:1.5:4:3',         // light denoise
-    unsharp: '3:3:0.8:3:3:0.4',  // light sharpen
-    eq: 'brightness=0.03:contrast=1.05:saturation=1.05',
-    crf: 22, // lower = better quality
+    // Very light denoise — keep natural grain
+    hqdn3d: '1:0.7:2:1.5',
+    // Hair-safe: gentle luma-only sharpen (low amount to protect fine strands)
+    // smartblur after sharpening smooths micro-noise on hair WITHOUT blurring edges
+    unsharp: '3:3:0.3:3:3:0.0',
+    smartblur: '0.5:0.3:-2',   // lt=0.5px, factor=0.3, threshold=-2 (edge-aware)
+    // No brightness boost; slight contrast & saturation
+    eq: 'brightness=0:contrast=1.03:saturation=1.05:gamma=0.97',
+    crf: 22,
     preset: 'fast',
   },
   medium: {
     scaleMultiplier: 2,
-    hqdn3d: '4:3:6:4.5',
-    unsharp: '5:5:1.0:5:5:0.5',
-    eq: 'brightness=0.05:contrast=1.1:saturation=1.1',
+    // Moderate denoise — reduce compression artifacts
+    hqdn3d: '2:1.5:3:2.5',
+    // Hair-safe: balanced luma-only sharpen — crisp but no halos
+    // smartblur threshold keeps fine hair strands naturally smooth
+    unsharp: '5:5:0.5:5:5:0.0',
+    smartblur: '0.6:0.4:-3',
+    // Cinematic grade: no brightness change, mild contrast, warmth
+    eq: 'brightness=0:contrast=1.06:saturation=1.1:gamma=0.95',
     crf: 20,
     preset: 'medium',
   },
   high: {
-    scaleMultiplier: 2,          // keep 2x for i5 performance
-    hqdn3d: '6:4.5:10:7.5',
-    unsharp: '7:7:1.5:7:7:0.8',
-    eq: 'brightness=0.08:contrast=1.15:saturation=1.15',
+    scaleMultiplier: 2,
+    // Stronger denoise for noisy/low-light footage
+    hqdn3d: '3.5:2.5:5:4',
+    // Hair-safe: controlled luma sharpening — fine detail without overshoot
+    // Reduced amount vs before so individual hairs don't pick up edge ringing
+    unsharp: '5:5:0.65:5:5:0.0',
+    smartblur: '0.8:0.5:-4',
+    // Film-like grade: deeper blacks, rich saturation, no overexposure
+    eq: 'brightness=0:contrast=1.09:saturation=1.15:gamma=0.93',
     crf: 18,
     preset: 'slow',
   },
@@ -90,21 +114,31 @@ function enhanceVideo(inputPath, outputPath, options = {}, onProgress = () => {}
       // Step 1: Scale up with Lanczos
       filters.push(`scale=${outWidth}:${outHeight}:flags=lanczos`);
 
-      // Step 2: Denoise
+      // Step 2: Denoise (gentle — preserve natural texture)
       filters.push(`hqdn3d=${preset.hqdn3d}`);
 
-      // Step 3: Sharpen
+      // Step 3: Hair-safe sharpening
+      // unsharp with reduced luma amount + smartblur edge-aware pass.
+      // smartblur uses negative threshold so it ONLY smooths low-contrast
+      // micro-noise (i.e. hair strand ringing) while leaving true edges untouched.
       filters.push(`unsharp=${preset.unsharp}`);
+      filters.push(`smartblur=${preset.smartblur}`);
 
       // Step 4: Brightness/contrast/saturation
       filters.push(`eq=${preset.eq}`);
 
-      // Step 5: Watermark via drawtext
+      // Step 5: Ultra-minimal stylish watermark
+      // - Font size: 0.55% of width (tiny, non-intrusive)
+      // - Opacity: 28% white — barely visible
+      // - Italic style via fontslant if supported, else plain
+      // - Bottom-right corner with tight padding
       if (addWatermark) {
+        const wmFontSize = Math.max(8, Math.round(outWidth * 0.0055));
         filters.push(
-          `drawtext=text='Enhanced by QualityAI':` +
-          `fontcolor=white@0.6:fontsize=${Math.round(outWidth * 0.02)}:` +
-          `x=w-tw-20:y=h-th-20`
+          `drawtext=text='\u26a1 QuickEnhance':` +
+          `fontcolor=white@0.28:fontsize=${wmFontSize}:` +
+          `shadowcolor=black@0.2:shadowx=1:shadowy=1:` +
+          `x=w-tw-8:y=h-th-6`
         );
       }
 

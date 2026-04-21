@@ -1,13 +1,31 @@
 import { useState, useEffect, useRef } from 'react';
 import ComparisonSlider from './ComparisonSlider';
+import VideoComparisonSlider from './VideoComparisonSlider';
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
 const EXPIRE_SECONDS = 10 * 60; // 10 minutes
 
 export default function ResultSection({ jobId, fileType, file, level, onNewFile }) {
   const downloadUrl = `${API_BASE}/api/enhance/download/${jobId}`;
-  const beforeSrc   = file ? URL.createObjectURL(file) : '';
-  const afterSrc    = `${downloadUrl}?t=${Date.now()}`;
+
+  // Stable beforeSrc: create object URL once, revoke on unmount
+  const beforeSrcRef = useRef('');
+  if (file && !beforeSrcRef.current) {
+    beforeSrcRef.current = URL.createObjectURL(file);
+  }
+  const beforeSrc = beforeSrcRef.current;
+
+  // afterSrc: NO cache-busting (?t=…) — that breaks HTTP range requests
+  // which causes the video to flicker/stall (range requests needed for seeking)
+  const afterSrc = downloadUrl;
+
+  useEffect(() => {
+    return () => {
+      // Revoke object URL when result section is unmounted
+      if (beforeSrcRef.current) URL.revokeObjectURL(beforeSrcRef.current);
+      beforeSrcRef.current = '';
+    };
+  }, []);
 
   const [secondsLeft, setSecondsLeft] = useState(EXPIRE_SECONDS);
   const [expired, setExpired]         = useState(false);
@@ -84,7 +102,7 @@ export default function ResultSection({ jobId, fileType, file, level, onNewFile 
             <p id="result-meta" className="text-xs text-muted">
               {fileType === 'image'
                 ? `Enhanced with ${level} quality · Drag slider to compare`
-                : 'Enhanced video ready · Press play to preview'}
+                : `Enhanced with ${level} quality · Drag line to compare before/after`}
             </p>
           </div>
         </div>
@@ -129,22 +147,11 @@ export default function ResultSection({ jobId, fileType, file, level, onNewFile 
         </div>
       )}
 
-      {/* Before/After or Video player */}
+      {/* Before/After or Video comparison */}
       {fileType === 'image' ? (
         <ComparisonSlider beforeSrc={beforeSrc} afterSrc={afterSrc} />
       ) : (
-        <div
-          id="video-result-container"
-          className="relative rounded-xl overflow-hidden bg-black mb-6"
-          style={{ aspectRatio: '16/9' }}
-        >
-          <video
-            id="compare-video"
-            className="w-full h-full object-contain"
-            src={afterSrc}
-            controls
-          />
-        </div>
+        <VideoComparisonSlider beforeSrc={beforeSrc} afterSrc={afterSrc} />
       )}
 
       {/* Download button */}

@@ -2,19 +2,48 @@
  * Validation Middleware
  * - validateFileType: checks MIME type matches extension
  * - validateVideoLength: uses ffprobe to enforce ≤ 60 seconds
+ *
+ * Supported formats:
+ * Images: JPEG, PNG, WebP, GIF, BMP, TIFF, AVIF, HEIC, SVG
+ * Videos: MP4, MOV, AVI, MKV, WebM, FLV, WMV, 3GP, OGV
  */
 
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('ffmpeg-static');
+const ffprobePath = require('ffprobe-static').path;
 
 ffmpeg.setFfmpegPath(ffmpegPath);
+ffmpeg.setFfprobePath(ffprobePath);
 
-// Allowed MIME types
-const ALLOWED_TYPES = {
-  'image/jpeg': ['.jpg', '.jpeg'],
-  'image/png': ['.png'],
-  'video/mp4': ['.mp4'],
-};
+// Allowed MIME types → grouped by media kind
+const IMAGE_TYPES = new Set([
+  'image/jpeg',
+  'image/jpg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/bmp',
+  'image/tiff',
+  'image/avif',
+  'image/heic',
+  'image/heif',
+  'image/svg+xml',
+]);
+
+const VIDEO_TYPES = new Set([
+  'video/mp4',
+  'video/quicktime',         // .mov
+  'video/x-msvideo',         // .avi
+  'video/x-matroska',        // .mkv
+  'video/webm',
+  'video/x-flv',             // .flv
+  'video/x-ms-wmv',          // .wmv
+  'video/3gpp',              // .3gp
+  'video/3gpp2',             // .3g2
+  'video/ogg',               // .ogv
+]);
+
+const ALLOWED_TYPES = new Set([...IMAGE_TYPES, ...VIDEO_TYPES]);
 
 const MAX_VIDEO_DURATION = 60; // seconds
 
@@ -26,9 +55,9 @@ function validateFileType(req, res, next) {
   if (!file) return next();
 
   const mime = file.mimetype;
-  if (!ALLOWED_TYPES[mime]) {
+  if (!ALLOWED_TYPES.has(mime)) {
     return res.status(400).json({
-      error: `Unsupported file type: ${mime}. Only JPG, PNG, and MP4 are allowed.`,
+      error: `Unsupported file type: ${mime}. Supported images: JPEG, PNG, WebP, GIF, BMP, TIFF, AVIF, HEIC. Videos: MP4, MOV, AVI, MKV, WebM, FLV, WMV, 3GP.`,
     });
   }
 
@@ -61,4 +90,4 @@ function validateVideoLength(filePath) {
   });
 }
 
-module.exports = { validateFileType, validateVideoLength };
+module.exports = { validateFileType, validateVideoLength, IMAGE_TYPES, VIDEO_TYPES };

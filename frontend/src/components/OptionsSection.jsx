@@ -65,7 +65,7 @@ export default function OptionsSection({ onEnhance }) {
       <div className="flex items-center justify-between py-3 border-t border-white/5">
         <div>
           <p className="text-sm font-medium" style={{ color: 'var(--text-base)' }}>Add Watermark</p>
-          <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted-strong)' }}>Adds &quot;Enhanced by QualityAI&quot; text overlay</p>
+          <p className="text-xs mt-0.5" style={{ color: 'var(--text-muted-strong)' }}>Adds a tiny &quot;⚡ QuickEnhance&quot; mark to the media</p>
         </div>
         <label className="relative inline-flex items-center cursor-pointer" id="watermark-toggle-label">
           <input

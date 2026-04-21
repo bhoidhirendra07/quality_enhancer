@@ -27,18 +27,18 @@ const PRESETS = {
   },
   medium: {
     scaleFactor: 2,
-    sharpenSigma: 1.0,
-    sharpenFlat: 1.0,
-    sharpenJagged: 2.0,
+    sharpenSigma: 0.8,
+    sharpenFlat: 0.8,
+    sharpenJagged: 1.5,
     medianSize: 3,
     brightness: 1.05,
     saturation: 1.1,
   },
   high: {
     scaleFactor: 3,
-    sharpenSigma: 1.5,
-    sharpenFlat: 1.5,
-    sharpenJagged: 3.0,
+    sharpenSigma: 1.2,
+    sharpenFlat: 1.2,
+    sharpenJagged: 2.2,
     medianSize: 5,
     brightness: 1.08,
     saturation: 1.15,
@@ -111,15 +111,17 @@ async function enhanceImage(inputPath, outputPath, options = {}, onProgress = ()
   // Step 5: Optional watermark (text overlay via composite)
   if (addWatermark) {
     onProgress(85, 'Adding watermark...');
+    const wmFontSize = Math.max(11, Math.round(finalWidth * 0.014));
     const watermarkSvg = Buffer.from(`
       <svg width="${finalWidth}" height="${finalHeight}">
-        <style>text { font-family: Arial, sans-serif; }</style>
+        <style>text { font-family: 'Arial', 'Helvetica', sans-serif; font-style: italic; letter-spacing: 0.5px; }</style>
         <text
-          x="${finalWidth - 20}" y="${finalHeight - 20}"
+          x="${finalWidth - 14}" y="${finalHeight - 12}"
           text-anchor="end"
-          font-size="${Math.max(16, Math.round(finalWidth * 0.02))}px"
-          fill="rgba(255,255,255,0.6)"
-        >Enhanced by QualityAI</text>
+          font-size="${wmFontSize}px"
+          fill="rgba(255,255,255,0.28)"
+          stroke="rgba(0,0,0,0.15)" stroke-width="2" paint-order="stroke"
+        >&#x26A1; QuickEnhance</text>
       </svg>
     `);
     pipeline = pipeline.composite([{ input: watermarkSvg, blend: 'over' }]);

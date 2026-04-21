@@ -8,7 +8,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const { validateFileType, validateVideoLength } = require('../middleware/validate');
+const { validateFileType, validateVideoLength, IMAGE_TYPES, VIDEO_TYPES } = require('../middleware/validate');
 
 const router = express.Router();
 
@@ -26,13 +26,18 @@ const storage = multer.diskStorage({
   },
 });
 
-// File filter: only allow jpg, jpeg, png, mp4
+// File filter: accept all image & video types supported by the app
 const fileFilter = (req, file, cb) => {
-  const allowed = ['image/jpeg', 'image/png', 'video/mp4'];
-  if (allowed.includes(file.mimetype)) {
+  if (IMAGE_TYPES.has(file.mimetype) || VIDEO_TYPES.has(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Invalid file type. Only JPG, PNG, and MP4 are supported.'), false);
+    cb(
+      new Error(
+        'Invalid file type. Supported images: JPEG, PNG, WebP, GIF, BMP, TIFF, AVIF, HEIC. ' +
+        'Supported videos: MP4, MOV, AVI, MKV, WebM, FLV, WMV, 3GP.'
+      ),
+      false
+    );
   }
 };
 
@@ -40,7 +45,7 @@ const upload = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 500 * 1024 * 1024, // 500MB max (will validate more strictly per type)
+    fileSize: 500 * 1024 * 1024, // 500 MB max (images validated more strictly below)
   },
 });
 
@@ -53,7 +58,8 @@ router.post('/', upload.single('file'), validateFileType, async (req, res, next)
     }
 
     const ext = path.extname(file.originalname).toLowerCase();
-    const fileType = ['.jpg', '.jpeg', '.png'].includes(ext) ? 'image' : 'video';
+    // Determine media kind by MIME type (more reliable than extension)
+    const fileType = IMAGE_TYPES.has(file.mimetype) ? 'image' : 'video';
 
     // For video files: validate duration ≤ 60 seconds
     if (fileType === 'video') {

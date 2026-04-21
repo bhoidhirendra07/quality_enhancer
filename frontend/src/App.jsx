@@ -99,7 +99,7 @@ export default function App() {
   // ── Light mode body bg ─────────────────────────────────────────
   const bodyBg = theme === 'dark'
     ? 'bg-gray-950 text-gray-100'
-    : 'bg-gradient-to-br from-indigo-50 via-violet-50 to-purple-100 text-indigo-950';
+    : 'bg-gradient-to-br from-violet-50 via-indigo-50 to-purple-50 text-slate-900';
 
   return (
     <div className={`min-h-screen transition-colors duration-300 font-inter ${bodyBg}`}>
@@ -146,7 +146,7 @@ export default function App() {
       <footer className="border-t py-8 px-4" style={{ borderColor: 'var(--footer-border)' }}>
         <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs" style={{ color: 'var(--footer-text)' }}>
-            © {new Date().getFullYear()} <span className="font-semibold text-brand-400">QualityAI</span> — All processing is server-side. No data stored.
+            © {new Date().getFullYear()} <span className="font-semibold text-brand-400">QuickEnhance</span> — All processing is server-side. No data stored.
           </p>
           <div className="flex items-center gap-3">
             <span className="text-xs px-2.5 py-1 rounded-full border" style={{ color: 'var(--footer-text)', borderColor: 'var(--border-subtle)', background: 'var(--surface-1)' }}>Node.js</span>

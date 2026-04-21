@@ -7,14 +7,14 @@ export default function Hero() {
         <svg xmlns="http://www.w3.org/2000/svg" className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
         </svg>
-        AI-Powered Enhancement — No Login Required
+        Instant Enhancement — No Login Required
       </div>
 
       {/* Headline */}
       <h1 className="hero-headline text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-5 leading-tight">
         Enhance Your Photos &amp;{' '}
         <span className="bg-gradient-to-r from-brand-400 via-accent-400 to-brand-400 bg-clip-text text-transparent">
-          Videos with AI
+          Videos
         </span>
       </h1>
 
