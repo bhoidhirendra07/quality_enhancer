@@ -129,11 +129,14 @@ async function enhanceImage(inputPath, outputPath, options = {}, onProgress = ()
 
   onProgress(90, 'Saving enhanced image...');
 
-  // Determine output format
+  // Determine output format — preserve original where possible
   const outputExt = path.extname(outputPath).toLowerCase();
   if (outputExt === '.png') {
     await pipeline.png({ quality: 100, compressionLevel: 6 }).toFile(outputPath);
+  } else if (outputExt === '.webp') {
+    await pipeline.webp({ quality: 92, effort: 5 }).toFile(outputPath);
   } else {
+    // Default: JPEG (covers .jpg, .jpeg, .gif, .bmp, .tiff, .avif, .heic, etc.)
     await pipeline.jpeg({ quality: 95, mozjpeg: true }).toFile(outputPath);
   }
 

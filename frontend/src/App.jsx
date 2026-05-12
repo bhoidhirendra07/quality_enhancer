@@ -38,6 +38,7 @@ export default function App() {
   const [jobId,     setJobId]     = useState(null);
   const [fileType,  setFileType]  = useState(null);
   const [file,      setFile]      = useState(null);
+  const [fileName,  setFileName]  = useState(null);  // original upload filename
   const [level,     setLevel]     = useState('medium');
   const [error,     setError]     = useState('');
   const [uploadKey, setUploadKey] = useState(0); // bump to remount UploadSection
@@ -55,6 +56,7 @@ export default function App() {
     setJobId(result.jobId);
     setFileType(result.fileType);
     setFile(result.file);
+    setFileName(result.fileName || null);
     setPhase('options');
     setError('');
   }, []);
@@ -66,7 +68,7 @@ export default function App() {
       const res = await fetch(`${API_BASE}/api/enhance`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ jobId, fileType, level: lvl, addWatermark }),
+        body: JSON.stringify({ jobId, fileType, level: lvl, addWatermark, originalName: fileName }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to start enhancement.');
@@ -74,7 +76,7 @@ export default function App() {
     } catch (e) {
       setError(e.message);
     }
-  }, [jobId, fileType]);
+  }, [jobId, fileType, fileName]);
 
   const handleComplete = useCallback(() => {
     setPhase('complete');
@@ -90,6 +92,7 @@ export default function App() {
     setJobId(null);
     setFileType(null);
     setFile(null);
+    setFileName(null);
     setLevel('medium');
     setError('');
     setUploadKey((k) => k + 1); // remount UploadSection to clear its internal state

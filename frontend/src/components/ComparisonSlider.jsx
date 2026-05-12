@@ -97,13 +97,12 @@ export default function ComparisonSlider({ beforeSrc, afterSrc }) {
       ref={containerRef}
       id="comparison-container"
       className="comparison-container relative rounded-xl overflow-hidden bg-black mb-6 select-none"
-      style={{ aspectRatio: '16/9' }}
       aria-label="Before and after comparison"
     >
       {/* Before image (full) */}
-      <img id="compare-before" src={beforeSrc} alt="Original" className="absolute inset-0 w-full h-full object-contain" />
+      <img id="compare-before" src={beforeSrc} alt="Original" className="w-full h-full object-contain block" />
 
-      {/* After image (clipped) */}
+      {/* After image (clipped) — absolutely positioned to overlay the before */}
       <div ref={afterClipRef} id="compare-after-clip" className="absolute inset-0 overflow-hidden" style={{ clipPath: 'inset(0 50% 0 0)' }}>
         <img id="compare-after" src={afterSrc} alt="Enhanced" className="absolute inset-0 w-full h-full object-contain" />
       </div>

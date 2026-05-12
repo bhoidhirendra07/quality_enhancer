@@ -4,7 +4,7 @@
  * - validateVideoLength: uses ffprobe to enforce ≤ 60 seconds
  *
  * Supported formats:
- * Images: JPEG, PNG, WebP, GIF, BMP, TIFF, AVIF, HEIC, SVG
+ * Images: JPEG, PNG, WebP, GIF, BMP, TIFF, AVIF, HEIC
  * Videos: MP4, MOV, AVI, MKV, WebM, FLV, WMV, 3GP, OGV
  */
 
@@ -27,7 +27,7 @@ const IMAGE_TYPES = new Set([
   'image/avif',
   'image/heic',
   'image/heif',
-  'image/svg+xml',
+  // SVG removed: Sharp cannot meaningfully upscale vector graphics
 ]);
 
 const VIDEO_TYPES = new Set([

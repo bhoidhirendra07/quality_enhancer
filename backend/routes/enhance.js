@@ -20,10 +20,25 @@ const router = express.Router();
 // Structure: { [jobId]: { status, progress, outputPath, error, fileType } }
 const jobs = {};
 
+// ─── Periodic job-store cleanup (prevent memory leak) ─────────────────────────
+// Evict completed / error / expired jobs older than 20 minutes from memory.
+setInterval(() => {
+  const cutoff = Date.now() - 20 * 60 * 1000;
+  Object.keys(jobs).forEach((id) => {
+    const job = jobs[id];
+    if (
+      (job.status === 'complete' || job.status === 'error' || job.expired) &&
+      job.startTime < cutoff
+    ) {
+      delete jobs[id];
+    }
+  });
+}, 20 * 60 * 1000);
+
 // ─── POST /api/enhance ────────────────────────────────────────────────────────
 router.post('/', async (req, res, next) => {
   try {
-    const { jobId, fileType, level = 'medium', addWatermark = false } = req.body;
+    const { jobId, fileType, level = 'medium', addWatermark = false, originalName } = req.body;
 
     if (!jobId || !fileType) {
       return res.status(400).json({ error: 'jobId and fileType are required.' });
@@ -43,12 +58,24 @@ router.post('/', async (req, res, next) => {
     const outputFileName = `enhanced_${jobId}${ext}`;
     const outputPath = path.join(__dirname, '../outputs', outputFileName);
 
+    // Build the user-friendly download name: "originalname_enhanced.ext"
+    // Strip extension from originalName (if provided), then append _enhanced + ext
+    let downloadName;
+    if (originalName) {
+      const origExt = path.extname(originalName);
+      const origBase = path.basename(originalName, origExt);
+      downloadName = `${origBase}_enhanced${ext}`;
+    } else {
+      downloadName = `enhanced_${jobId}${ext}`;
+    }
+
     // Initialize job
     jobs[jobId] = {
       status: 'processing',
       progress: 0,
       outputPath,
       outputFileName,
+      downloadName,   // friendly name for download
       error: null,
       fileType,
       startTime: Date.now(),
@@ -168,7 +195,9 @@ router.get('/download/:jobId', (req, res) => {
     return res.status(400).json({ error: 'Enhanced file not ready yet.' });
   }
 
-  res.download(job.outputPath, `enhanced_${jobId}${path.extname(job.outputPath)}`);
+  // Use friendly downloadName if available, else fall back to outputPath filename
+  const downloadAs = job.downloadName || `enhanced_${jobId}${path.extname(job.outputPath)}`;
+  res.download(job.outputPath, downloadAs);
 });
 
 module.exports = router;

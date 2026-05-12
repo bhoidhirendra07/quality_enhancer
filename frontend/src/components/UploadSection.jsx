@@ -7,7 +7,8 @@ const MAX_VIDEO_SIZE = 500 * 1024 * 1024;  // 500 MB
 const IMAGE_TYPES = new Set([
   'image/jpeg', 'image/jpg', 'image/png', 'image/webp',
   'image/gif', 'image/bmp', 'image/tiff', 'image/avif',
-  'image/heic', 'image/heif', 'image/svg+xml',
+  'image/heic', 'image/heif',
+  // SVG removed: server cannot meaningfully upscale vector graphics
 ]);
 
 // All accepted video MIME types
@@ -17,7 +18,7 @@ const VIDEO_TYPES = new Set([
   'video/x-ms-wmv', 'video/3gpp', 'video/3gpp2', 'video/ogg',
 ]);
 
-const IMAGE_ACCEPT = '.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.tif,.avif,.heic,.heif,.svg';
+const IMAGE_ACCEPT = '.jpg,.jpeg,.png,.webp,.gif,.bmp,.tiff,.tif,.avif,.heic,.heif';
 const VIDEO_ACCEPT = '.mp4,.mov,.avi,.mkv,.webm,.flv,.wmv,.3gp,.3g2,.ogv';
 const ALL_ACCEPT = `${IMAGE_ACCEPT},${VIDEO_ACCEPT}`;
 
@@ -64,7 +65,7 @@ export default function UploadSection({ onUploaded, onError }) {
       const res = await fetch(`${API_BASE}/api/upload`, { method: 'POST', body: form });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Upload failed.');
-      onUploaded({ jobId: data.jobId, fileType: data.fileType, file });
+      onUploaded({ jobId: data.jobId, fileType: data.fileType, file, fileName: data.fileName });
     } catch (e) {
       onError(e.message || 'Upload failed. Is the backend running?');
       setPreview(null);
