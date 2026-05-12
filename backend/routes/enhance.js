@@ -20,7 +20,7 @@ const router = express.Router();
 // Structure: { [jobId]: { status, progress, outputPath, error, fileType } }
 const jobs = {};
 
-// ─── Periodic job-store cleanup (prevent memory leak) ─────────────────────────
+// Periodic job-store cleanup (prevent memory leak) 
 // Evict completed / error / expired jobs older than 20 minutes from memory.
 setInterval(() => {
   const cutoff = Date.now() - 20 * 60 * 1000;
@@ -35,7 +35,7 @@ setInterval(() => {
   });
 }, 20 * 60 * 1000);
 
-// ─── POST /api/enhance ────────────────────────────────────────────────────────
+// POST /api/enhance 
 router.post('/', async (req, res, next) => {
   try {
     const { jobId, fileType, level = 'medium', addWatermark = false, originalName } = req.body;
@@ -129,7 +129,7 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-// ─── GET /api/enhance/progress/:jobId  (Server-Sent Events) ──────────────────
+// GET /api/enhance/progress/:jobId  (Server-Sent Events) 
 router.get('/progress/:jobId', (req, res) => {
   const { jobId } = req.params;
 
@@ -174,7 +174,7 @@ router.get('/progress/:jobId', (req, res) => {
   req.on('close', () => clearInterval(interval));
 });
 
-// ─── GET /api/enhance/download/:jobId ─────────────────────────────────────────
+// GET /api/enhance/download/:jobId 
 router.get('/download/:jobId', (req, res) => {
   const { jobId } = req.params;
   const job = jobs[jobId];

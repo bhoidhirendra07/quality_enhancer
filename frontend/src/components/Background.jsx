@@ -4,7 +4,7 @@ export default function Background({ theme }) {
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
 
-      {/* ── Orb 1: top-left indigo */}
+      {/* Orb 1: top-left indigo */}
       <div
         className={`absolute rounded-full blur-3xl
           ${isDark
@@ -13,7 +13,7 @@ export default function Background({ theme }) {
         style={isDark ? {} : { animation: 'orb-drift-1 18s ease-in-out infinite' }}
       />
 
-      {/* ── Orb 2: top-right violet */}
+      {/* Orb 2: top-right violet */}
       <div
         className={`absolute rounded-full blur-3xl
           ${isDark
@@ -22,7 +22,7 @@ export default function Background({ theme }) {
         style={isDark ? { animationDelay: '2s' } : { animation: 'orb-drift-2 22s ease-in-out infinite' }}
       />
 
-      {/* ── Orb 3: bottom-left blue */}
+      {/* Orb 3: bottom-left blue */}
       <div
         className={`absolute rounded-full blur-3xl
           ${isDark
@@ -31,7 +31,7 @@ export default function Background({ theme }) {
         style={isDark ? { animationDelay: '4s' } : { animation: 'orb-drift-3 25s ease-in-out infinite' }}
       />
 
-      {/* ── Orb 4 (light only): center-right pink-purple */}
+      {/* Orb 4 (light only): center-right pink-purple */}
       {!isDark && (
         <div
           className="absolute w-[320px] h-[320px] top-1/2 right-1/4 rounded-full blur-3xl bg-purple-200/45"
@@ -39,7 +39,7 @@ export default function Background({ theme }) {
         />
       )}
 
-      {/* ── Orb 5 (light only): bottom-right soft rose */}
+      {/* Orb 5 (light only): bottom-right soft rose */}
       {!isDark && (
         <div
           className="absolute w-[280px] h-[280px] -bottom-20 right-0 rounded-full blur-3xl bg-fuchsia-100/60"
@@ -47,7 +47,7 @@ export default function Background({ theme }) {
         />
       )}
 
-      {/* ── Animated gradient mesh (light only) */}
+      {/* Animated gradient mesh (light only) */}
       {!isDark && (
         <div
           className="absolute inset-0 opacity-30"

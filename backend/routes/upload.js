@@ -12,7 +12,7 @@ const { validateFileType, validateVideoLength, IMAGE_TYPES, VIDEO_TYPES } = requ
 
 const router = express.Router();
 
-// ─── Multer storage config ────────────────────────────────────────────────────
+// Multer storage config 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, path.join(__dirname, '../uploads'));
@@ -49,7 +49,7 @@ const upload = multer({
   },
 });
 
-// ─── POST /api/upload ─────────────────────────────────────────────────────────
+// POST /api/upload 
 router.post('/', upload.single('file'), validateFileType, async (req, res, next) => {
   try {
     const file = req.file;

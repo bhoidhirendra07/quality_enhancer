@@ -22,7 +22,7 @@ export default function VideoComparisonSlider({ beforeSrc, afterSrc }) {
   const [duration, setDuration] = useState(0);
   const [muted,    setMuted]    = useState(true);
 
-  // ── Slider position ──────────────────────────────────────────────
+  // Slider position
   const setPosition = useCallback((clientX) => {
     const container = containerRef.current;
     const handle    = handleRef.current;
@@ -34,7 +34,7 @@ export default function VideoComparisonSlider({ beforeSrc, afterSrc }) {
     if (afterClip) afterClip.style.clipPath = `inset(0 0 0 ${pct}%)`;
   }, []);
 
-  // ── Drag events ──────────────────────────────────────────────────
+  // Drag events
   useEffect(() => {
     const handle    = handleRef.current;
     const container = containerRef.current;
@@ -71,7 +71,7 @@ export default function VideoComparisonSlider({ beforeSrc, afterSrc }) {
     };
   }, [setPosition]);
 
-  // ── Sync playback between videos ─────────────────────────────────
+  // Sync playback between videos 
   const syncVideos = useCallback((source, target) => {
     if (syncLock.current) return;
     syncLock.current = true;
@@ -81,7 +81,7 @@ export default function VideoComparisonSlider({ beforeSrc, afterSrc }) {
     syncLock.current = false;
   }, []);
 
-  // ── Play / Pause ──────────────────────────────────────────────────
+  // Play / Pause 
   const togglePlay = useCallback(() => {
     const bv = beforeVidRef.current;
     const av = afterVidRef.current;
@@ -97,7 +97,7 @@ export default function VideoComparisonSlider({ beforeSrc, afterSrc }) {
     }
   }, []);
 
-  // ── Seek ──────────────────────────────────────────────────────────
+  // Seek
   const handleSeek = useCallback((e) => {
     const bv = beforeVidRef.current;
     const av = afterVidRef.current;
@@ -108,7 +108,7 @@ export default function VideoComparisonSlider({ beforeSrc, afterSrc }) {
     setProgress(t);
   }, []);
 
-  // ── Wire up video events ──────────────────────────────────────────
+  // Wire up video events
   useEffect(() => {
     const bv = beforeVidRef.current;
     const av = afterVidRef.current;

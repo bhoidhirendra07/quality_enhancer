@@ -2,14 +2,14 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* ── Google Font ──────────────────────────────────────────────── */
+/* Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 body {
   font-family: 'Inter', sans-serif;
 }
 
-/* ── CSS Variables ────────────────────────────────────────────── */
+/* CSS Variables */
 :root {
   /* Dark mode defaults */
   --glass-bg:          rgba(255, 255, 255, 0.03);
@@ -49,7 +49,7 @@ body {
   --footer-text:       #64748b;
 }
 
-/* ── Light mode overrides (warm lavender — not too bright) ─── */
+/* Light mode overrides (warm lavender — not too bright) */
 html.light {
   /* Glass: soft lavender-tinted cards */
   --glass-bg:          rgba(238, 235, 255, 0.82);
@@ -89,7 +89,7 @@ html.light {
   --footer-text:       #6d28d9;
 }
 
-/* ── Semantic utility classes ─────────────────────────────────── */
+/* Semantic utility classes */
 .text-muted        { color: var(--text-muted); }
 .text-muted-strong { color: var(--text-muted-strong); }
 .result-title      { color: var(--text-base); }
@@ -113,7 +113,7 @@ html.light {
   border-radius: 0.75rem;
 }
 
-/* ── Glass Card Component ─────────────────────────────────────── */
+/* Glass Card Component */
 @layer components {
   .glass-card {
     background: var(--glass-bg);
@@ -183,7 +183,7 @@ html.light {
   .btn-success:active { transform: scale(0.98); }
 }
 
-/* ── Drop Zone drag-active ────────────────────────────────────── */
+/* Drop Zone drag-active */
 .drop-zone-active {
   border-color: #6366f1 !important;
   background-color: rgba(99, 102, 241, 0.08) !important;
@@ -195,7 +195,7 @@ html.light {
   box-shadow: 0 0 30px rgba(99, 102, 241, 0.4);
 }
 
-/* ── Light mode: drop zone ──────────────────────────────────── */
+/* Light mode: drop zone */
 html.light #drop-zone {
   border-color: rgba(139, 92, 246, 0.3);
   background: rgba(139, 92, 246, 0.04);
@@ -211,7 +211,7 @@ html.light #preview-name { color: #1e1b4b; }
 html.light #preview-meta { color: #6d28d9; }
 html.light #file-preview > div { background: var(--preview-bg); border-color: var(--preview-border); }
 
-/* ── Light mode: Options section ──────────────────────────────── */
+/* Light mode: Options section */
 html.light #section-options h3,
 html.light .options-heading { color: #0f172a; }
 html.light #section-options label { color: #334155; }
@@ -234,7 +234,7 @@ html.light #section-options .text-white { color: #1e293b !important; }
 html.light #section-options .text-gray-400 { color: #475569 !important; }
 html.light #section-options .text-gray-500 { color: #64748b !important; }
 
-/* ── Light mode: Processing section ──────────────────────────── */
+/* Light mode: Processing section */
 html.light #section-processing h3 { color: #0f172a; }
 html.light #section-processing .text-gray-400 { color: #475569; }
 html.light #section-processing .text-gray-600 { color: #64748b; }
@@ -242,14 +242,14 @@ html.light #progress-pct { color: #0f172a; }
 html.light .w-full.bg-white\/5 { background: rgba(99, 102, 241, 0.08); }
 html.light #steps-container > div.bg-white\/5 { background: rgba(99, 102, 241, 0.05); }
 
-/* ── Light mode: Result section ───────────────────────── */
+/* Light mode: Result section */
 html.light #result-meta { color: #4f46e5; }
 
-/* ── Light mode: Error banner ────────────────────────── */
+/* Light mode: Error banner */
 html.light #section-error { background: rgba(239, 68, 68, 0.06); border-color: rgba(239, 68, 68, 0.28); }
 html.light #error-message { color: #991b1b; }
 
-/* ── Light mode: Hero section ─────────────────────────── */
+/* Light mode: Hero section */
 html.light #section-hero h1,
 html.light .hero-headline { color: #1e1b4b !important; }
 html.light .hero-subtitle { color: #5b21b6 !important; }
@@ -262,14 +262,14 @@ html.light #section-hero .text-brand-400 { color: #4f46e5; }
 html.light #section-hero .bg-brand-500\/10 { background: rgba(99, 102, 241, 0.08); }
 html.light #section-hero .border-brand-500\/20 { border-color: rgba(99, 102, 241, 0.2); }
 
-/* ── Light mode: Watermark toggle border ─────────────────────── */
+/* Light mode: Watermark toggle border */
 html.light .border-white\/5 { border-color: rgba(0,0,0,0.07); }
 html.light .bg-white\/10 { background: rgba(0,0,0,0.05) !important; }
 
 /* Toggle switch track in light mode */
 html.light .peer:not(:checked) ~ div { background: rgba(0,0,0,0.12) !important; border-color: rgba(0,0,0,0.1) !important; }
 
-/* ── Light mode: Navbar ───────────────────────────────────────── */
+/* Light mode: Navbar */
 html.light header {
   background: rgba(237, 233, 254, 0.92) !important;
   border-bottom-color: rgba(139, 92, 246, 0.2) !important;
@@ -284,17 +284,17 @@ html.light #theme-toggle:hover {
   background: rgba(139, 92, 246, 0.2) !important;
 }
 
-/* ── Light mode: Footer ───────────────────────────────────────── */
+/* Light mode: Footer */
 html.light footer {
   border-color: var(--footer-border) !important;
   background: rgba(237, 233, 254, 0.6);
 }
 
-/* ── Light mode: Scrollbar ────────────────────────────────────── */
+/* Light mode: Scrollbar  */
 html.light ::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.3); }
 html.light ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5); }
 
-/* ── Shimmer Progress Bar ─────────────────────────────────────── */
+/* Shimmer Progress Bar  */
 .shimmer-bar {
   position: relative;
   overflow: hidden;
@@ -313,13 +313,13 @@ html.light ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5)
   100% { left: 200%; }
 }
 
-/* ── Float keyframe ───────────────────────────────────────────── */
+/* Float keyframe */
 @keyframes float {
   0%, 100% { transform: translateY(0px); }
   50%       { transform: translateY(-8px); }
 }
 
-/* ── Light mode: Orb drift animations ────────────────────────── */
+/* Light mode: Orb drift animations */
 /* Each orb drifts in a unique figure-8-like path at different speeds */
 @keyframes orb-drift-1 {
   0%   { transform: translate(0px,   0px)   scale(1);    }
@@ -346,14 +346,14 @@ html.light ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5)
   100% { transform: translate(0px,  0px)   scale(1);    }
 }
 
-/* ── Light mode: Gradient mesh shift ─────────────────────────── */
+/* Light mode: Gradient mesh shift */
 @keyframes mesh-shift {
   0%   { opacity: 0.25; transform: scale(1)    rotate(0deg);   }
   50%  { opacity: 0.40; transform: scale(1.08) rotate(3deg);   }
   100% { opacity: 0.28; transform: scale(1.02) rotate(-2deg);  }
 }
 
-/* ── Comparison Slider ────────────────────────────────────────── */
+/* Comparison Slider */
 .comparison-container {
   cursor: ew-resize;
   touch-action: none;
@@ -363,7 +363,7 @@ html.light ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5)
   outline-offset: 2px;
 }
 
-/* ── Step Indicators ──────────────────────────────────────────── */
+/* Step Indicators */
 .step-active {
   color: #818cf8 !important;
   background-color: rgba(99, 102, 241, 0.12) !important;
@@ -372,7 +372,7 @@ html.light ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5)
   color: #34d399 !important;
 }
 
-/* ── Section Enter Animation ──────────────────────────────────── */
+/* Section Enter Animation */
 .section-enter {
   animation: sectionEnter 0.4s ease forwards;
 }
@@ -381,7 +381,7 @@ html.light ::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.5)
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Scrollbar ────────────────────────────────────────────────── */
+/* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.3); border-radius: 3px; }

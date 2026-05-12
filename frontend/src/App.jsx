@@ -99,7 +99,7 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
-  // ── Light mode body bg ─────────────────────────────────────────
+  // Light mode body bg 
   const bodyBg = theme === 'dark'
     ? 'bg-gray-950 text-gray-100'
     : 'bg-gradient-to-br from-violet-50 via-indigo-50 to-purple-50 text-slate-900';

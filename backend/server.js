@@ -15,14 +15,14 @@ const enhanceRouter = require('./routes/enhance');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ─── Ensure temp directories exist ───────────────────────────────────────────
+// Ensure temp directories exist 
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
 const OUTPUTS_DIR = path.join(__dirname, 'outputs');
 [UPLOADS_DIR, OUTPUTS_DIR].forEach((dir) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
 
-// ─── Middleware ───────────────────────────────────────────────────────────────
+// Middleware 
 app.use(cors({
   origin: process.env.FRONTEND_URL || '*',
   methods: ['GET', 'POST', 'DELETE'],
@@ -33,7 +33,7 @@ app.use(express.urlencoded({ extended: true }));
 // Serve processed output files (for download)
 app.use('/outputs', express.static(OUTPUTS_DIR));
 
-// ─── Routes ───────────────────────────────────────────────────────────────────
+// Routes 
 app.use('/api/upload', uploadRouter);
 app.use('/api/enhance', enhanceRouter);
 
@@ -42,7 +42,7 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Quality Enhancer API is running' });
 });
 
-// ─── Auto-cleanup: delete temp files older than 10 minutes ───────────────────
+// Auto-cleanup: delete temp files older than 10 minutes 
 const AUTO_DELETE_MS = 10 * 60 * 1000; // 10 minutes
 
 function cleanupOldFiles(directory) {
@@ -68,7 +68,7 @@ setInterval(() => {
   cleanupOldFiles(OUTPUTS_DIR);
 }, 5 * 60 * 1000);
 
-// ─── Error handler ────────────────────────────────────────────────────────────
+// Error handler 
 app.use((err, req, res, next) => {
   console.error('[Error]', err.message);
   res.status(err.status || 500).json({
@@ -76,7 +76,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// ─── Start server ─────────────────────────────────────────────────────────────
+// Start server 
 app.listen(PORT, () => {
   console.log(`✅ Quality Enhancer API running on http://localhost:${PORT}`);
 });
