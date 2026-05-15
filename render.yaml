@@ -5,7 +5,7 @@ services:
   - type: web
     name: quality-enhancer
     env: node
-    region: singapore   # choose region closest to your users
+    region: singapore  # choose region closest to your users
     rootDir: backend
     buildCommand: npm install --include=optional
     startCommand: node server.js
