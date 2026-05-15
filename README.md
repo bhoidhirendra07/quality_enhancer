@@ -112,7 +112,7 @@ preview → serves them locally
    - **Start Command:** `node server.js`
    - **Environment Variables:** `FRONTEND_URL=https://your-vercel-url.vercel.app`
 5. Click **Deploy**
-6. Copy your Render URL (e.g. `https://qualityai.onrender.com`)
+6. Copy your Render URL (e.g. `https://QualityEnhancer.onrender.com`)
 
 ### Frontend → Vercel (Free)
 
@@ -121,7 +121,7 @@ preview → serves them locally
 3. No build command needed
 4. Before deploying, update `API_BASE` in `frontend/js/app.js`:
    ```js
-   export const API_BASE = 'https://qualityai.onrender.com';
+   export const API_BASE = 'https://QualityEnhancer.onrender.com';
    ```
 5. Click **Deploy**
 
