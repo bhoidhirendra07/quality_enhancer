@@ -11,7 +11,7 @@
 quality_enhancer/
 ├── frontend/                  ← HTML + CSS + JS (deploy to Vercel)
 │   ├── index.html
-│   ├── css/styles.css
+│   ├── css/styles.css 
 │   └── js/
 │       ├── app.js
 │       ├── uploader.js
