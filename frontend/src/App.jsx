@@ -17,7 +17,7 @@ const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
  * phase: 'idle' | 'options' | 'processing' | 'complete'
  */
 export default function App() {
-  // ── Theme ──────────────────────────────────────────────────────
+  // Theme 
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
@@ -34,7 +34,7 @@ export default function App() {
 
   const toggleTheme = () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'));
 
-  // ── App State ──────────────────────────────────────────────────
+  //  App State 
   const [phase,     setPhase]     = useState('idle');    // idle | options | processing | complete
   const [jobId,     setJobId]     = useState(null);
   const [fileType,  setFileType]  = useState(null);
@@ -44,7 +44,7 @@ export default function App() {
   const [error,     setError]     = useState('');
   const [uploadKey, setUploadKey] = useState(0); // bump to remount UploadSection
 
-  // ── Callbacks ──────────────────────────────────────────────────
+  // Callbacks 
   const handleUploaded = useCallback((result) => {
     if (!result) {
       // File removed
