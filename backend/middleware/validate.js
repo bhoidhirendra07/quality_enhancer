@@ -6,7 +6,7 @@
  * Supported formats:
  * Images: JPEG, PNG, WebP, GIF, BMP, TIFF, AVIF, HEIC
  * Videos: MP4, MOV, AVI, MKV, WebM, FLV, WMV, 3GP, OGV
- */
+ */ 
 
 const ffmpeg = require('fluent-ffmpeg');
 const ffmpegPath = require('ffmpeg-static');
