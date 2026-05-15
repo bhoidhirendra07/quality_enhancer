@@ -22,10 +22,28 @@ const OUTPUTS_DIR = path.join(__dirname, 'outputs');
   if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 });
 
-// Middleware 
+// Middleware
+// Allowed origins: exact FRONTEND_URL, any *.vercel.app preview, and localhost dev
+const ALLOWED_ORIGINS = [
+  process.env.FRONTEND_URL,                    // e.g. https://quality-enhancer.vercel.app
+  /^https:\/\/.*\.vercel\.app$/,               // Vercel preview deployments
+  /^http:\/\/localhost:\d+$/,                  // local dev (any port)
+  /^http:\/\/127\.0\.0\.1:\d+$/,              // local dev (127.0.0.1)
+].filter(Boolean);
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL || '*',
-  methods: ['GET', 'POST', 'DELETE'],
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Render health-checks)
+    if (!origin) return callback(null, true);
+    const allowed = ALLOWED_ORIGINS.some((o) =>
+      typeof o === 'string' ? o === origin : o.test(origin)
+    );
+    if (allowed) return callback(null, true);
+    callback(new Error(`CORS: origin ${origin} not allowed`));
+  },
+  methods: ['GET', 'POST', 'DELETE', 'HEAD'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: false,
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

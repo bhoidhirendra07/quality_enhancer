@@ -144,6 +144,11 @@ router.get('/progress/:jobId', (req, res) => {
     res.write(`data: ${JSON.stringify(data)}\n\n`);
   };
 
+  // Heartbeat: send a comment every 15s to prevent Render/proxy idle-timeout (30s)
+  const heartbeat = setInterval(() => {
+    res.write(': heartbeat\n\n');
+  }, 15000);
+
   // Poll job status and stream updates
   const interval = setInterval(() => {
     const job = jobs[jobId];
@@ -151,6 +156,7 @@ router.get('/progress/:jobId', (req, res) => {
     if (!job) {
       sendEvent({ status: 'error', error: 'Job not found.' });
       clearInterval(interval);
+      clearInterval(heartbeat);
       res.end();
       return;
     }
@@ -166,12 +172,16 @@ router.get('/progress/:jobId', (req, res) => {
 
     if (job.status === 'complete' || job.status === 'error') {
       clearInterval(interval);
+      clearInterval(heartbeat);
       setTimeout(() => res.end(), 500);
     }
   }, 500); // update every 500ms
 
   // Clean up on client disconnect
-  req.on('close', () => clearInterval(interval));
+  req.on('close', () => {
+    clearInterval(interval);
+    clearInterval(heartbeat);
+  });
 });
 
 // GET /api/enhance/download/:jobId 

@@ -1,18 +1,22 @@
 # Render.com deployment configuration
-# Deploy backend as a free web service
+# Deploy backend as a web service
 
 services:
   - type: web
-    name: qualityai-backend
+    name: quality-enhancer
     env: node
+    region: singapore   # choose region closest to your users
     rootDir: backend
-    buildCommand: npm install
+    buildCommand: npm install --include=optional
     startCommand: node server.js
     plan: free
+    healthCheckPath: /api/health
     envVars:
       - key: NODE_ENV
         value: production
       - key: PORT
-        value: 5000
+        value: 10000          # Render assigns its own port; this is just a fallback
       - key: FRONTEND_URL
-        sync: false   # set this manually in Render dashboard
+        value: https://quality-enhancer.vercel.app   # ← Replace with your actual Vercel URL
+      - key: NODE_OPTIONS
+        value: "--max-old-space-size=512"
