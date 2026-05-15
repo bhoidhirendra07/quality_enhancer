@@ -1,7 +1,7 @@
-# QualityAI — AI Photo & Video Enhancer
+# QualityEnhancer — Photo & Video Enhancer
 
 > 🚀 **100% Free** — No login, no cost, no data storage.  
-> Built with Node.js, Sharp, and FFmpeg. Works great on an i5 laptop!
+> Built with Node.js, Sharp, and FFmpeg. Works great!
 
 ---
 
@@ -136,7 +136,7 @@ preview → serves them locally
 | 📊 Real-time Progress | SSE progress bar + ring + step indicators |
 | 🔀 Before/After Slider | Interactive drag comparison |
 | 🌙 Dark/Light Mode | Persisted in localStorage |
-| 🏷️ Watermark Toggle | Optional "Enhanced by QualityAI" overlay |
+| 🏷️ Watermark Toggle | Optional "Enhanced by QualityEnhancer" overlay |
 | ⚡ Enhancement Levels | Low / Medium / High |
 | 🔒 Privacy | Files auto-deleted after 10 minutes |
 | 📱 Responsive | Mobile + Desktop |
